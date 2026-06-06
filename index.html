@@ -233,28 +233,24 @@ function startRecording() {
   if (!SR) { showToast('⚠️ Используйте браузер Chrome'); return; }
   recognition = new SR();
   recognition.lang = 'ru-RU';
-  recognition.continuous = true;
-  recognition.interimResults = true;
+  recognition.continuous = false;
+  recognition.interimResults = false;
   recognition.onstart = () => {
     isRecording = true;
     document.getElementById('micBtn').classList.add('recording');
     document.getElementById('micBtn').textContent = '⏹';
-    document.getElementById('micStatus').textContent = '● Идёт запись...';
+    document.getElementById('micStatus').textContent = '● Идёт запись... (говорите)';
     document.getElementById('micStatus').classList.add('active');
     document.getElementById('transcriptWrap').style.display = 'block';
     const tb = document.getElementById('transcriptBox');
     if (!tb.value.trim()) tb.value = '';
   };
-  // ИСПРАВЛЕНО: больше нет дублирования слов
+  // ИСПРАВЛЕНО: только финальные результаты, без дублирования
   recognition.onresult = (e) => {
-    let finalResult = '', interimResult = '';
-    for (let i = 0; i < e.results.length; ++i) {
-      if (e.results[i].isFinal) finalResult += e.results[i][0].transcript;
-      else interimResult += e.results[i][0].transcript;
-    }
-    transcript = finalResult;
-    document.getElementById('transcriptBox').value = finalResult + interimResult;
-    if ((finalResult + interimResult).trim()) {
+    const result = e.results[e.results.length - 1];
+    if (result.isFinal) {
+      transcript += result[0].transcript + ' ';
+      document.getElementById('transcriptBox').value = transcript.trim();
       document.getElementById('processVoiceBtn').disabled = false;
     }
   };
