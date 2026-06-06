@@ -146,11 +146,11 @@
     <div class="lock-error" id="lockError"></div>
   </div>
   <div class="lock-box" id="lockKeyStep" style="display:none">
-    <div class="lock-box-title">🔑 Qwen API ключ</div>
-    <input class="lock-input" id="keyInput" type="password" placeholder="sk-ws-H..." style="font-size:12px;letter-spacing:0.5px" onkeydown="if(event.key==='Enter')checkApiKey()">
+    <div class="lock-box-title">🔑 Gemini API ключ</div>
+    <input class="lock-input" id="keyInput" type="password" placeholder="AQ.Ab8RN..." style="font-size:12px;letter-spacing:0.5px" onkeydown="if(event.key==='Enter')checkApiKey()">
     <button class="lock-btn" onclick="checkApiKey()">Войти →</button>
     <div class="lock-error" id="keyError"></div>
-    <div class="lock-hint">Ключ от dashscope.aliyuncs.com</div>
+    <div class="lock-hint">Ключ от aistudio.google.com</div>
   </div>
 </div>
 
@@ -281,14 +281,14 @@
 <div class="bottom-bar">
   <div class="btn-row">
     <button class="btn-add" onclick="addManualRow()">+ Добавить товар</button>
-    <button class="btn-export" id="exportBtn" onclick="exportCSV()" disabled>📥 Скачать CSV</button>
+    <button class="btn-export" id="exportBtn" onclick="exportCSV()" disabled>📊 Скачать Excel</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
 const WORKER_URL = 'https://small-shadow-b1ff.1kemenger.workers.dev';
-let QWEN_KEY = '';
+let GEMINI_KEY_APP = '';
 let recognition = null, isRecording = false, voiceText = '';
 const units = ['кг','г','л','мл','шт','уп','порц'];
 
@@ -416,31 +416,35 @@ function renderPhotos() {
 async function processAllPhotos() {
   if (!photos.length) return;
   document.getElementById('photoBtn').disabled = true;
-  showLoading(true, `📷 Qwen читает ${photos.length} фото...`);
+  showLoading(true, `📷 Gemini читает ${photos.length} фото...`);
   try {
-    const content = [];
+    // Формируем parts для Gemini
+    const parts = [];
     photos.forEach((p, i) => {
-      content.push({ type: 'text', text: `Накладная ${i+1}:` });
-      content.push({ type: 'image_url', image_url: { url: p.data } });
+      parts.push({ text: `Накладная ${i+1}:` });
+      const base64 = p.data.split(',')[1];
+      const mime = p.mime || 'image/jpeg';
+      parts.push({ inline_data: { mime_type: mime, data: base64 } });
     });
-    content.push({ type: 'text', text: `Извлеки ВСЕ товары из всех накладных включая рукописный текст.
+    parts.push({ text: `Ты специализированный ИИ для распознавания накладных ресторана.
+Извлеки ВСЕ товары из всех накладных включая рукописный текст.
 Верни ТОЛЬКО чистый JSON без markdown:
-[{"name":"Название","qty":10,"unit":"кг","price":500}]
-Цена не указана — 0. Количество не указано — 1.` });
+[{"name":"Название товара","qty":10,"unit":"кг","price":500}]
+Если цена не указана — 0. Если количество не указано — 1. Единица по умолчанию — кг.` });
 
     const resp = await fetch(WORKER_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Provider': 'qwen' },
-      body: JSON.stringify({ model: 'qwen-vl-max', messages: [{ role: 'user', content }], temperature: 0.1 })
+      headers: { 'Content-Type': 'application/json', 'X-Provider': 'gemini' },
+      body: JSON.stringify({ contents: [{ parts }] })
     });
     const data = await resp.json();
     if (data.error) throw new Error(data.error.message);
-    const raw = data.choices[0].message.content.trim().replace(/```json|```/g, '').trim();
+    const raw = data.candidates[0].content.parts[0].text.trim().replace(/```json|```/g, '').trim();
     const items = JSON.parse(raw);
     addToTable('photo', items);
     photos = []; renderPhotos();
     document.getElementById('photoBtn').disabled = true;
-    showToast(`✅ Qwen распознал ${items.length} позиций!`);
+    showToast(`✅ Gemini распознал ${items.length} позиций!`);
   } catch(e) {
     showToast('❌ Ошибка: ' + e.message);
     document.getElementById('photoBtn').disabled = false;
@@ -464,7 +468,7 @@ async function processTextData() {
   showLoading(false);
 }
 
-// ── QWEN API через Worker ──
+// ── GEMINI API через Worker ──
 async function askQwen(text) {
   const prompt = `Ты помощник ресторана iiko. Извлеки товары из текста.
 Текст: "${text}"
@@ -474,16 +478,14 @@ async function askQwen(text) {
 
   const resp = await fetch(WORKER_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Provider': 'qwen' },
+    headers: { 'Content-Type': 'application/json', 'X-Provider': 'gemini' },
     body: JSON.stringify({
-      model: 'qwen-plus',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.1
+      contents: [{ parts: [{ text: prompt }] }]
     })
   });
   const data = await resp.json();
   if (data.error) throw new Error(data.error.message);
-  const raw = data.choices[0].message.content.trim().replace(/```json|```/g, '').trim();
+  const raw = data.candidates[0].content.parts[0].text.trim().replace(/```json|```/g, '').trim();
   return JSON.parse(raw);
 }
 
@@ -606,15 +608,7 @@ function renderTable(type) {
 }
 
 // ── ЭКСПОРТ ──
-function exportCSV() {
-  const allRows = [
-    ...tables.voice.map(r=>({...r, source:'Голос'})),
-    ...tables.photo.map(r=>({...r, source:'Фото'})),
-    ...tables.text.map(r=>({...r, source:'Текст'})),
-    ...tables.manual.map(r=>({...r, source:'Вручную'}))
-  ];
-
-  // Синхронизируем значения из DOM
+function syncTables() {
   ['voice','photo','text','manual'].forEach(type => {
     tables[type].forEach(r => {
       const n=document.getElementById(`n_${type}_${r.id}`);
@@ -626,21 +620,119 @@ function exportCSV() {
       r.total=r.qty*r.price;
     });
   });
+}
 
-  const valid = allRows.filter(r=>r.name.trim());
-  if (!valid.length) { showToast('⚠️ Нет данных'); return; }
+function makeSheetData(rows, sheetName) {
+  const header = ['№','Наименование','Количество','Единица','Цена','Сумма'];
+  const data = [header];
+  rows.filter(r=>r.name.trim()).forEach((r,i) => {
+    data.push([i+1, r.name.trim(), r.qty, r.unit, r.price, r.total]);
+  });
+  const total = rows.filter(r=>r.name.trim()).reduce((s,r)=>s+(r.total||0),0);
+  data.push(['','ИТОГО', rows.filter(r=>r.name.trim()).length+' позиций','','', total]);
+  return data;
+}
 
-  const header = 'Источник,Наименование,Количество,Единица,Цена,Сумма\n';
-  const body = valid.map(r=>`"${r.source}","${r.name.trim()}","${r.qty}","${r.unit}","${r.price}","${r.total}"`).join('\n');
-  const totalAll = valid.reduce((s,r)=>s+(r.total||0),0);
-  const footer = `\n"ИТОГО","","${valid.length} позиций","","","${totalAll}"`;
+async function exportCSV() {
+  syncTables();
 
-  const blob = new Blob(['\uFEFF'+header+body+footer],{type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href=url; a.download=`накладная_${new Date().toLocaleDateString('ru')}.csv`; a.click();
-  URL.revokeObjectURL(url);
-  showToast('📥 Скачано! Загрузите в iiko');
+  const allRows = [
+    ...tables.voice,
+    ...tables.photo,
+    ...tables.text,
+    ...tables.manual
+  ].filter(r=>r.name.trim());
+
+  if (!allRows.length) { showToast('⚠️ Нет данных'); return; }
+
+  showToast('📊 Создаю Excel файл...');
+
+  try {
+    // Загружаем SheetJS
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
+
+    const wb = XLSX.utils.book_new();
+
+    // Лист 1 — Вручную
+    const manualData = makeSheetData(tables.manual, 'Вручную');
+    if (tables.manual.filter(r=>r.name.trim()).length > 0) {
+      const ws1 = XLSX.utils.aoa_to_sheet(manualData);
+      styleSheet(ws1);
+      XLSX.utils.book_append_sheet(wb, ws1, '✏️ Вручную');
+    }
+
+    // Лист 2 — Фото накладных
+    const photoData = makeSheetData(tables.photo, 'Фото');
+    if (tables.photo.filter(r=>r.name.trim()).length > 0) {
+      const ws2 = XLSX.utils.aoa_to_sheet(photoData);
+      styleSheet(ws2);
+      XLSX.utils.book_append_sheet(wb, ws2, '📷 Фото накладных');
+    }
+
+    // Лист 3 — Голос
+    const voiceData = makeSheetData(tables.voice, 'Голос');
+    if (tables.voice.filter(r=>r.name.trim()).length > 0) {
+      const ws3 = XLSX.utils.aoa_to_sheet(voiceData);
+      styleSheet(ws3);
+      XLSX.utils.book_append_sheet(wb, ws3, '🎤 Голос');
+    }
+
+    // Лист 4 — Текст
+    const textData = makeSheetData(tables.text, 'Текст');
+    if (tables.text.filter(r=>r.name.trim()).length > 0) {
+      const ws4 = XLSX.utils.aoa_to_sheet(textData);
+      styleSheet(ws4);
+      XLSX.utils.book_append_sheet(wb, ws4, '📝 Текст');
+    }
+
+    // Лист 5 — ВСЕ данные итого
+    const allData = [['№','Источник','Наименование','Количество','Единица','Цена','Сумма']];
+    let n = 1;
+    ['manual','photo','voice','text'].forEach(type => {
+      const label = {manual:'Вручную',photo:'Фото',voice:'Голос',text:'Текст'}[type];
+      tables[type].filter(r=>r.name.trim()).forEach(r => {
+        allData.push([n++, label, r.name.trim(), r.qty, r.unit, r.price, r.total]);
+      });
+    });
+    const totalAll = allRows.reduce((s,r)=>s+(r.total||0),0);
+    allData.push(['','','ИТОГО', allRows.length+' позиций','','', totalAll]);
+
+    const ws5 = XLSX.utils.aoa_to_sheet(allData);
+    styleSheet(ws5);
+    XLSX.utils.book_append_sheet(wb, ws5, '📊 Все данные');
+
+    // Если нет ни одного листа — добавляем пустой
+    if (wb.SheetNames.length === 0) {
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['Нет данных']]), 'Данные');
+    }
+
+    XLSX.writeFile(wb, `накладная_${new Date().toLocaleDateString('ru')}.xlsx`);
+    showToast('📥 Excel скачан! Загрузите в iiko');
+  } catch(e) {
+    console.error(e);
+    showToast('❌ Ошибка: ' + e.message);
+  }
+}
+
+function styleSheet(ws) {
+  // Устанавливаем ширину колонок
+  ws['!cols'] = [
+    {wch:5},   // №
+    {wch:35},  // Наименование
+    {wch:12},  // Количество
+    {wch:10},  // Единица
+    {wch:12},  // Цена
+    {wch:14},  // Сумма
+  ];
+}
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+    const s = document.createElement('script');
+    s.src = src; s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
 }
 
 function showLoading(show,txt=''){document.getElementById('loading').style.display=show?'block':'none';if(txt)document.getElementById('loadingText').textContent=txt;}
@@ -659,8 +751,8 @@ function checkPassword(){
     setTimeout(()=>el.classList.remove('error'),500);
     return;
   }
-  const saved=sessionStorage.getItem('iiko_qwen');
-  if(saved){QWEN_KEY=saved;unlockApp();}
+  const saved=sessionStorage.getItem('iiko_gemini');
+  if(saved){GEMINI_KEY_APP=saved;unlockApp();}
   else{
     document.getElementById('lockPassStep').style.display='none';
     document.getElementById('lockKeyStep').style.display='block';
@@ -671,8 +763,8 @@ function checkPassword(){
 function checkApiKey(){
   const val=document.getElementById('keyInput').value.trim();
   if(!val||val.length<10){document.getElementById('keyError').textContent='❌ Введите правильный ключ';return;}
-  QWEN_KEY=val;
-  sessionStorage.setItem('iiko_qwen',val);
+  GEMINI_KEY_APP=val;
+  sessionStorage.setItem('iiko_gemini',val);
   unlockApp();
 }
 
@@ -684,9 +776,9 @@ function unlockApp(){
 
 window.addEventListener('load',()=>{
   const auth=sessionStorage.getItem('iiko_auth');
-  const saved=sessionStorage.getItem('iiko_qwen');
+  const saved=sessionStorage.getItem('iiko_gemini');
   if(auth&&saved&&(Date.now()-parseInt(auth))<8*60*60*1000){
-    QWEN_KEY=saved;
+    GEMINI_KEY_APP=saved;
     document.getElementById('lockScreen').classList.add('hidden');
     document.getElementById('mainApp').style.display='block';
   }
