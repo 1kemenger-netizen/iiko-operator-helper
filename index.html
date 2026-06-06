@@ -14,11 +14,11 @@
   .lock-screen{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#00b894,#00cec9);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
   .lock-screen.hidden{display:none;}
   .lock-logo{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:6px;}
-  .lock-title{font-family:'Unbounded',sans-serif;font-size:20px;color:#fff;font-weight:700;margin-bottom:4px;text-align:center;}
-  .lock-icon{font-size:56px;margin:20px 0;}
+  .lock-title{font-family:'Unbounded',sans-serif;font-size:20px;color:#fff;font-weight:700;text-align:center;}
+  .lock-icon{font-size:56px;margin:16px 0;}
   .lock-box{background:#fff;border-radius:20px;padding:24px;width:100%;max-width:360px;box-shadow:0 16px 48px rgba(0,0,0,0.15);}
   .lock-box-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;text-align:center;letter-spacing:1px;text-transform:uppercase;}
-  .lock-input{width:100%;border:2px solid var(--border);border-radius:12px;padding:13px 16px;font-family:'Manrope',sans-serif;font-size:18px;font-weight:600;color:var(--text);outline:none;background:var(--bg);text-align:center;letter-spacing:4px;margin-bottom:12px;}
+  .lock-input{width:100%;border:2px solid var(--border);border-radius:12px;padding:13px 16px;font-family:'Manrope',sans-serif;font-size:16px;font-weight:600;color:var(--text);outline:none;background:var(--bg);text-align:center;margin-bottom:12px;}
   .lock-input:focus{border-color:var(--accent);}
   .lock-input.error{border-color:var(--danger);animation:shake 0.4s ease;}
   @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
@@ -28,11 +28,15 @@
   .lock-hint{font-size:11px;color:var(--text2);text-align:center;margin-top:10px;line-height:1.5;}
 
   /* HEADER */
-  .header{background:var(--accent);padding:16px;text-align:center;box-shadow:0 2px 16px rgba(0,184,148,0.3);}
-  .header-logo{font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:4px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:2px;}
-  .header h1{font-family:'Unbounded',sans-serif;font-size:16px;color:#fff;font-weight:700;}
-  .header p{font-size:11px;color:rgba(255,255,255,0.75);margin-top:2px;}
-  .api-ok{background:#d4edda;border-bottom:2px solid #00b894;padding:8px 16px;font-size:12px;font-weight:700;color:var(--accent-dark);display:flex;align-items:center;gap:6px;}
+  .header{background:var(--accent);padding:14px 16px;text-align:center;box-shadow:0 2px 16px rgba(0,184,148,0.3);}
+  .header-logo{font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:4px;color:rgba(255,255,255,0.7);text-transform:uppercase;}
+  .header h1{font-family:'Unbounded',sans-serif;font-size:15px;color:#fff;font-weight:700;margin-top:2px;}
+
+  /* ИТОГО ВВЕРХУ */
+  .grand-total-bar{background:#1e272e;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;}
+  .grand-total-label{font-size:11px;color:rgba(255,255,255,0.7);font-weight:600;}
+  .grand-total-amount{font-family:'Unbounded',sans-serif;font-size:16px;color:#00b894;font-weight:700;}
+  .grand-total-count{font-size:11px;color:rgba(255,255,255,0.5);}
 
   /* TABS */
   .tabs{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:var(--white);border-bottom:2px solid var(--border);}
@@ -41,30 +45,30 @@
   .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 
   /* PANELS */
-  .panel{display:none;padding:14px;}
+  .panel{display:none;padding:14px;padding-bottom:120px;}
   .panel.active{display:block;animation:fadeUp 0.2s ease;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
-  /* VOICE */
   .hint-box{background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--border);margin-bottom:12px;}
   .hint-box strong{font-size:12px;font-weight:700;color:var(--accent);display:block;margin-bottom:4px;}
   .hint-box p{font-size:13px;color:var(--text2);line-height:1.5;font-style:italic;}
+
+  /* VOICE */
   .voice-center{display:flex;flex-direction:column;align-items:center;padding:16px 0 12px;}
   .mic-btn{width:100px;height:100px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);cursor:pointer;font-size:38px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,184,148,0.4);}
   .mic-btn.recording{background:linear-gradient(135deg,var(--danger),#fd79a8);animation:pulse 1.2s infinite;}
   @keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.06);}100%{transform:scale(1);}}
-  .mic-status{margin-top:12px;font-size:13px;font-weight:600;color:var(--text2);text-align:center;}
+  .mic-status{margin-top:10px;font-size:12px;font-weight:600;color:var(--text2);text-align:center;}
   .mic-status.active{color:var(--danger);}
-  .transcript-area{width:100%;min-height:80px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;resize:vertical;line-height:1.5;margin-bottom:10px;display:block;}
+  .transcript-area{width:100%;min-height:80px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;resize:vertical;line-height:1.5;margin-bottom:10px;}
   .transcript-area:focus{border-color:var(--accent);}
 
   /* PHOTO */
-  .photos-wrap{margin-bottom:12px;}
   .photos-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
-  .photo-thumb{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--white);}
+  .photo-thumb{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
   .photo-thumb img{width:100%;height:100px;object-fit:cover;display:block;}
   .photo-thumb .rm-btn{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,0.6);color:#fff;border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-  .photo-add{border:2.5px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100px;transition:all 0.2s;}
+  .photo-add{border:2.5px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100px;}
   .photo-add:active{border-color:var(--accent);}
   .photo-add .icon{font-size:28px;margin-bottom:4px;}
   .photo-add p{font-size:12px;color:var(--text2);}
@@ -72,28 +76,31 @@
   #fileInput{display:none;}
 
   /* BUTTONS */
-  .btn-ai{width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);color:#fff;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,184,148,0.35);margin-bottom:8px;}
+  .btn-ai{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);color:#fff;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,184,148,0.35);margin-bottom:8px;}
   .btn-ai:disabled{background:#b2bec3;box-shadow:none;cursor:not-allowed;}
   .btn-ai:not(:disabled):active{transform:scale(0.98);}
-  .btn-clear-text{width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--text2);font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
 
   /* LOADING */
   .loading{text-align:center;padding:20px;color:var(--text2);font-size:13px;font-weight:600;display:none;}
   .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 8px;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
-  /* TABLE */
-  .table-section{padding:14px;padding-bottom:160px;display:none;}
-  .section-head{font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
-  .clear-btn{font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;color:var(--danger);background:none;border:none;cursor:pointer;}
+  /* SECTION HEADER */
+  .section-header{background:var(--white);border-radius:12px;padding:12px 14px;margin-bottom:10px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+  .section-header-left{font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);}
+  .section-header-right{display:flex;align-items:center;gap:10px;}
+  .section-total{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;color:var(--accent);}
+  .clear-btn{font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;color:var(--danger);background:none;border:none;cursor:pointer;}
+
+  /* ROW CARD */
   .row-card{background:var(--white);border-radius:12px;padding:12px;margin-bottom:8px;box-shadow:var(--shadow);border:1.5px solid transparent;animation:slideIn 0.2s ease;}
   @keyframes slideIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
   .row-card:focus-within{border-color:var(--accent);}
   .row-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-  .row-num{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;}
+  .row-num{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;}
   .row-badge{background:rgba(0,184,148,0.1);border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700;color:var(--accent);}
-  .del-btn{background:none;border:none;font-size:16px;cursor:pointer;color:#b2bec3;padding:3px 6px;border-radius:6px;}
-  .del-btn:active{background:#ffe0db;color:var(--danger);}
+  .del-btn{background:none;border:none;font-size:16px;cursor:pointer;color:#b2bec3;padding:2px 6px;}
+  .del-btn:active{color:var(--danger);}
   .field-label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;}
   .field-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:9px 11px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:500;color:var(--text);outline:none;background:var(--bg);margin-bottom:8px;}
   .field-input:focus{border-color:var(--accent);background:#fff;}
@@ -109,20 +116,20 @@
 
   /* BOTTOM */
   .bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);padding:10px 14px 22px;box-shadow:0 -4px 20px rgba(0,0,0,0.1);z-index:100;}
-  .total-sum{background:linear-gradient(135deg,var(--accent),#00cec9);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-  .total-sum-label{font-size:11px;color:rgba(255,255,255,0.85);font-weight:600;}
-  .total-sum-amount{font-family:'Unbounded',sans-serif;font-size:14px;color:#fff;font-weight:700;}
   .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .btn-add{padding:12px;border-radius:12px;border:2px dashed var(--accent);background:rgba(0,184,148,0.06);color:var(--accent);font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
   .btn-add:active{background:rgba(0,184,148,0.15);}
   .btn-export{padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.35);}
   .btn-export:disabled{background:#b2bec3;box-shadow:none;cursor:not-allowed;}
 
-  /* TOAST */
-  .toast{position:fixed;bottom:120px;left:50%;transform:translateX(-50%) translateY(20px);background:#2d3436;color:#fff;padding:11px 18px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;transition:all 0.3s ease;z-index:999;white-space:nowrap;pointer-events:none;}
+  .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#2d3436;color:#fff;padding:11px 18px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;transition:all 0.3s ease;z-index:999;white-space:nowrap;pointer-events:none;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
   .manual-info{background:var(--white);border-radius:12px;padding:14px;border:1px solid var(--border);font-size:13px;color:var(--text2);line-height:1.6;}
+
+  /* DOC SEPARATOR */
+  .doc-separator{background:linear-gradient(135deg,#2d3436,#636e72);border-radius:10px;padding:10px 14px;margin:12px 0 8px;display:flex;justify-content:space-between;align-items:center;}
+  .doc-separator-title{font-size:12px;font-weight:700;color:#fff;}
+  .doc-separator-sum{font-size:12px;font-weight:700;color:#00b894;}
 </style>
 </head>
 <body>
@@ -139,11 +146,11 @@
     <div class="lock-error" id="lockError"></div>
   </div>
   <div class="lock-box" id="lockKeyStep" style="display:none">
-    <div class="lock-box-title">🔑 Groq API ключ</div>
-    <input class="lock-input" id="keyInput" type="password" placeholder="gsk_..." style="letter-spacing:1px;font-size:13px" onkeydown="if(event.key==='Enter')checkApiKey()">
+    <div class="lock-box-title">🔑 Qwen API ключ</div>
+    <input class="lock-input" id="keyInput" type="password" placeholder="sk-ws-H..." style="font-size:12px;letter-spacing:0.5px" onkeydown="if(event.key==='Enter')checkApiKey()">
     <button class="lock-btn" onclick="checkApiKey()">Войти →</button>
     <div class="lock-error" id="keyError"></div>
-    <div class="lock-hint">Бесплатно на <a href="https://console.groq.com/" target="_blank" style="color:var(--accent);font-weight:700">console.groq.com</a></div>
+    <div class="lock-hint">Ключ от dashscope.aliyuncs.com</div>
   </div>
 </div>
 
@@ -152,10 +159,18 @@
 <div class="header">
   <div class="header-logo">iiko</div>
   <h1>Помощник оператора</h1>
-  <p>Голос · Фото · Текст · Вручную → CSV</p>
 </div>
-<div class="api-ok">✅ Groq + OCR активны — все функции работают</div>
 
+<!-- ИТОГО ВВЕРХУ -->
+<div class="grand-total-bar">
+  <div>
+    <div class="grand-total-label">Общий итог всех накладных</div>
+    <div class="grand-total-count" id="grandCount">0 позиций</div>
+  </div>
+  <div class="grand-total-amount" id="grandTotal">0 ₸</div>
+</div>
+
+<!-- TABS -->
 <div class="tabs">
   <div class="tab active" onclick="switchTab(0)"><span class="tab-icon">🎤</span>Голос</div>
   <div class="tab" onclick="switchTab(1)"><span class="tab-icon">📷</span>Фото</div>
@@ -166,86 +181,125 @@
 <!-- ГОЛОС -->
 <div class="panel active" id="panel-0">
   <div class="hint-box">
-    <strong>💡 Говорите весь список сразу:</strong>
-    <p>«Мука 10 кг по 500, масло 3 кг по 1200, говядина 5 кг по 3000» — всё за один раз!</p>
+    <strong>🎤 Говорите весь список сразу:</strong>
+    <p>«Мука 10 кг по 500, масло 3 кг по 1200, говядина 5 кг по 3000»</p>
   </div>
   <div class="voice-center">
     <button class="mic-btn" id="micBtn" onclick="toggleVoice()">🎤</button>
-    <div class="mic-status" id="micStatus">Нажмите → говорите весь список → нажмите стоп</div>
+    <div class="mic-status" id="micStatus">Нажмите → говорите → нажмите стоп</div>
   </div>
-  <div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;">Распознанный текст (можно исправить)</span>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+    <span style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;">Текст (можно исправить)</span>
     <button onclick="clearVoice()" style="background:none;border:none;font-size:12px;font-weight:700;color:var(--danger);cursor:pointer;">🗑 Очистить</button>
   </div>
-  <textarea class="transcript-area" id="transcriptBox" placeholder="Здесь появится текст записи. Вы можете исправить ошибки перед отправкой в ИИ." oninput="voiceText=this.value;document.getElementById('voiceBtn').disabled=!this.value.trim();"></textarea>
-  <button class="btn-ai" id="voiceBtn" onclick="processText(voiceText,'voiceBtn')" disabled>✨ Распознать → добавить все позиции в таблицу</button>
+  <textarea class="transcript-area" id="transcriptBox" placeholder="Здесь появится текст. Исправьте ошибки если нужно." oninput="voiceText=this.value;document.getElementById('voiceBtn').disabled=!this.value.trim();"></textarea>
+  <button class="btn-ai" id="voiceBtn" onclick="processVoiceData()" disabled>✨ Распознать → добавить в таблицу голоса</button>
+
+  <!-- ТАБЛИЦА ГОЛОСА -->
+  <div id="voiceTableSection" style="display:none">
+    <div class="section-header">
+      <div class="section-header-left">📋 Данные из голоса</div>
+      <div class="section-header-right">
+        <span class="section-total" id="voiceTotal">0 ₸</span>
+        <button class="clear-btn" onclick="clearTable('voice')">Очистить</button>
+      </div>
+    </div>
+    <div id="voiceRows"></div>
+  </div>
 </div>
 
 <!-- ФОТО -->
 <div class="panel" id="panel-1">
   <div class="hint-box">
     <strong>📷 Несколько накладных сразу:</strong>
-    <p>Добавьте одно или несколько фото — OCR прочитает текст, ИИ занесёт все товары в таблицу.</p>
+    <p>Добавьте фото — Qwen читает даже рукописный текст!</p>
   </div>
-  <div class="photos-wrap">
-    <div class="photos-grid" id="photosGrid">
-      <div class="photo-add" onclick="document.getElementById('fileInput').click()">
-        <div class="icon">📄</div>
-        <p><strong>Добавить фото</strong></p>
-        <p>накладной</p>
-      </div>
+  <div class="photos-grid" id="photosGrid">
+    <div class="photo-add" onclick="document.getElementById('fileInput').click()">
+      <div class="icon">📄</div><p><strong>Добавить фото</strong></p>
     </div>
   </div>
   <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="addPhoto(event)">
   <div id="photoCount" style="font-size:12px;color:var(--text2);text-align:center;margin-bottom:10px;"></div>
   <button class="btn-ai" id="photoBtn" onclick="processAllPhotos()" disabled>✨ Распознать все накладные → в таблицу</button>
+
+  <!-- ТАБЛИЦА ФОТО -->
+  <div id="photoTableSection" style="display:none">
+    <div class="section-header">
+      <div class="section-header-left">📋 Данные из фото</div>
+      <div class="section-header-right">
+        <span class="section-total" id="photoTotal">0 ₸</span>
+        <button class="clear-btn" onclick="clearTable('photo')">Очистить</button>
+      </div>
+    </div>
+    <div id="photoRows"></div>
+  </div>
 </div>
 
 <!-- ТЕКСТ -->
 <div class="panel" id="panel-2">
   <div class="hint-box">
     <strong>📝 Вставьте текст накладной:</strong>
-    <p>Скопируйте из WhatsApp, СМС или документа — ИИ разберёт все товары автоматически.</p>
+    <p>Скопируйте из WhatsApp, СМС или Google Lens</p>
   </div>
-  <textarea id="rawText" style="width:100%;min-height:140px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;outline:none;margin-bottom:10px;background:#fff;resize:vertical;line-height:1.5;" placeholder="Мука пшеничная 10 кг - 5000 тг&#10;Масло сливочное 3 кг - 3600 тг&#10;Говядина 5 кг - 15000 тг"></textarea>
-  <button class="btn-ai" onclick="processText(document.getElementById('rawText').value.trim(),'rawBtn')">✨ Распознать текст → добавить в таблицу</button>
+  <textarea id="rawText" style="width:100%;min-height:130px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;outline:none;margin-bottom:10px;background:#fff;resize:vertical;" placeholder="Мука 10 кг - 5000&#10;Масло 3 кг - 3600&#10;Говядина 5 кг - 15000"></textarea>
+  <button class="btn-ai" onclick="processTextData()">✨ Распознать → добавить в таблицу текста</button>
+
+  <!-- ТАБЛИЦА ТЕКСТА -->
+  <div id="textTableSection" style="display:none">
+    <div class="section-header">
+      <div class="section-header-left">📋 Данные из текста</div>
+      <div class="section-header-right">
+        <span class="section-total" id="textTotal">0 ₸</span>
+        <button class="clear-btn" onclick="clearTable('text')">Очистить</button>
+      </div>
+    </div>
+    <div id="textRows"></div>
+  </div>
 </div>
 
 <!-- ВРУЧНУЮ -->
 <div class="panel" id="panel-3">
-  <div class="manual-info">Нажмите <strong>«+ Добавить товар»</strong> внизу → заполните карточку. Сумма считается автоматически.</div>
+  <div class="manual-info" style="margin-bottom:12px;">Нажмите <strong>«+ Добавить товар»</strong> внизу и заполните карточки.</div>
+
+  <!-- ТАБЛИЦА ВРУЧНУЮ -->
+  <div id="manualTableSection" style="display:none">
+    <div class="section-header">
+      <div class="section-header-left">📋 Вручную добавленные</div>
+      <div class="section-header-right">
+        <span class="section-total" id="manualTotal">0 ₸</span>
+        <button class="clear-btn" onclick="clearTable('manual')">Очистить</button>
+      </div>
+    </div>
+    <div id="manualRows"></div>
+  </div>
 </div>
 
 <div class="loading" id="loading"><div class="spinner"></div><span id="loadingText">Обрабатываю...</span></div>
 
-<div class="table-section" id="tableSection">
-  <div class="section-head">
-    <span>Данные для iiko ({{count}} позиций)</span>
-    <button class="clear-btn" onclick="clearAll()">Очистить всё</button>
-  </div>
-  <div id="rowsContainer"></div>
-</div>
-
+<!-- BOTTOM BAR -->
 <div class="bottom-bar">
-  <div class="total-sum">
-    <span class="total-sum-label">Общая сумма накладной:</span>
-    <span class="total-sum-amount" id="totalLabel">0 ₸</span>
-  </div>
   <div class="btn-row">
-    <button class="btn-add" onclick="addRow()">+ Добавить товар</button>
+    <button class="btn-add" onclick="addManualRow()">+ Добавить товар</button>
     <button class="btn-export" id="exportBtn" onclick="exportCSV()" disabled>📥 Скачать CSV</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-const OCR_KEY = 'K87470080288957';
 const WORKER_URL = 'https://small-shadow-b1ff.1kemenger.workers.dev';
-let GROQ_KEY = '';
-let rows = [], photos = [], recognition = null, isRecording = false, voiceText = '';
+let QWEN_KEY = '';
+let recognition = null, isRecording = false, voiceText = '';
 const units = ['кг','г','л','мл','шт','уп','порц'];
 
-// ── TABS ──
+// Отдельные таблицы для каждого режима
+const tables = {
+  voice: [],
+  photo: [],
+  text: [],
+  manual: []
+};
+
 function switchTab(n) {
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===n));
   document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===n));
@@ -261,7 +315,6 @@ function startRec() {
   recognition.lang = 'ru-RU';
   recognition.continuous = true;
   recognition.interimResults = true;
-  let finalText = '';
 
   recognition.onstart = () => {
     isRecording = true;
@@ -277,7 +330,6 @@ function startRec() {
       if (e.results[i].isFinal) fin += e.results[i][0].transcript + ' ';
       else interim += e.results[i][0].transcript;
     }
-    finalText = fin;
     voiceText = fin + interim;
     document.getElementById('transcriptBox').value = voiceText.trim();
     document.getElementById('voiceBtn').disabled = !voiceText.trim();
@@ -292,7 +344,6 @@ function startRec() {
     voiceText = document.getElementById('transcriptBox').value.trim();
     if (voiceText) document.getElementById('voiceBtn').disabled = false;
   };
-
   recognition.start();
 }
 
@@ -302,11 +353,31 @@ function clearVoice() {
   voiceText = '';
   document.getElementById('transcriptBox').value = '';
   document.getElementById('voiceBtn').disabled = true;
-  document.getElementById('micStatus').textContent = 'Нажмите → говорите весь список → нажмите стоп';
+  document.getElementById('micStatus').textContent = 'Нажмите → говорите → нажмите стоп';
   showToast('🗑 Очищено');
 }
 
+async function processVoiceData() {
+  if (!voiceText.trim()) return;
+  document.getElementById('voiceBtn').disabled = true;
+  showLoading(true, 'ИИ разбирает голос...');
+  try {
+    const items = await askQwen(voiceText);
+    addToTable('voice', items);
+    voiceText = '';
+    document.getElementById('transcriptBox').value = '';
+    document.getElementById('micStatus').textContent = 'Нажмите → говорите → нажмите стоп';
+    showToast(`✅ Добавлено ${items.length} позиций!`);
+  } catch(e) {
+    showToast('❌ Ошибка: ' + e.message);
+    document.getElementById('voiceBtn').disabled = false;
+  }
+  showLoading(false);
+}
+
 // ── ФОТО ──
+let photos = [];
+
 function addPhoto(e) {
   const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
@@ -321,8 +392,7 @@ function addPhoto(e) {
 }
 
 function removePhoto(i) {
-  photos.splice(i, 1);
-  renderPhotos();
+  photos.splice(i, 1); renderPhotos();
   if (!photos.length) document.getElementById('photoBtn').disabled = true;
 }
 
@@ -340,60 +410,35 @@ function renderPhotos() {
   add.onclick = () => document.getElementById('fileInput').click();
   add.innerHTML = `<div class="icon">➕</div><p><strong>Ещё фото</strong></p>`;
   grid.appendChild(add);
-  document.getElementById('photoCount').textContent = photos.length ? `Загружено: ${photos.length} фото — ИИ обработает все сразу` : '';
+  document.getElementById('photoCount').textContent = photos.length ? `Загружено: ${photos.length} фото` : '';
 }
 
 async function processAllPhotos() {
   if (!photos.length) return;
   document.getElementById('photoBtn').disabled = true;
   showLoading(true, `📷 Qwen читает ${photos.length} фото...`);
-
   try {
-    // Формируем сообщение для Qwen с фото
     const content = [];
-    
     photos.forEach((p, i) => {
-      content.push({
-        type: 'text',
-        text: `Накладная ${i+1}:`
-      });
-      content.push({
-        type: 'image_url',
-        image_url: { url: p.data }
-      });
+      content.push({ type: 'text', text: `Накладная ${i+1}:` });
+      content.push({ type: 'image_url', image_url: { url: p.data } });
     });
-    
-    content.push({
-      type: 'text',
-      text: `Ты специализированный ИИ для распознавания накладных ресторана.
-Извлеки ВСЕ товары из всех накладных выше включая рукописный текст.
+    content.push({ type: 'text', text: `Извлеки ВСЕ товары из всех накладных включая рукописный текст.
 Верни ТОЛЬКО чистый JSON без markdown:
-[{"name":"Название товара","qty":10,"unit":"кг","price":500}]
-Если цена не указана — 0. Если количество не указано — 1. Единица по умолчанию — кг.`
-    });
+[{"name":"Название","qty":10,"unit":"кг","price":500}]
+Цена не указана — 0. Количество не указано — 1.` });
 
     const resp = await fetch(WORKER_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Provider': 'qwen'
-      },
-      body: JSON.stringify({
-        model: 'qwen-vl-max',
-        messages: [{ role: 'user', content }],
-        temperature: 0.1
-      })
+      headers: { 'Content-Type': 'application/json', 'X-Provider': 'qwen' },
+      body: JSON.stringify({ model: 'qwen-vl-max', messages: [{ role: 'user', content }], temperature: 0.1 })
     });
-
     const data = await resp.json();
     if (data.error) throw new Error(data.error.message);
-    
     const raw = data.choices[0].message.content.trim().replace(/```json|```/g, '').trim();
     const items = JSON.parse(raw);
-    
-    addRowsToTable(items);
-    photos = [];
-    renderPhotos();
+    addToTable('photo', items);
+    photos = []; renderPhotos();
     document.getElementById('photoBtn').disabled = true;
     showToast(`✅ Qwen распознал ${items.length} позиций!`);
   } catch(e) {
@@ -403,19 +448,38 @@ async function processAllPhotos() {
   showLoading(false);
 }
 
-// ── GROQ ──
-async function askGroq(text) {
-  const prompt = `Ты помощник ресторана. Извлеки ВСЕ товары из текста накладной.
-Текст: "${text}"
-Верни ТОЛЬКО чистый JSON массив без markdown:
-[{"name":"Название товара","qty":10,"unit":"кг","price":500}]
-Правила: цена не указана — 0, количество не указано — 1, единица по умолчанию — кг.
-Извлеки все позиции которые есть в тексте.`;
+// ── ТЕКСТ ──
+async function processTextData() {
+  const val = document.getElementById('rawText').value.trim();
+  if (!val) { showToast('⚠️ Вставьте текст'); return; }
+  showLoading(true, 'ИИ анализирует текст...');
+  try {
+    const items = await askQwen(val);
+    addToTable('text', items);
+    document.getElementById('rawText').value = '';
+    showToast(`✅ Добавлено ${items.length} позиций!`);
+  } catch(e) {
+    showToast('❌ Ошибка: ' + e.message);
+  }
+  showLoading(false);
+}
 
-  const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+// ── QWEN API через Worker ──
+async function askQwen(text) {
+  const prompt = `Ты помощник ресторана iiko. Извлеки товары из текста.
+Текст: "${text}"
+Верни ТОЛЬКО чистый JSON без markdown:
+[{"name":"Название","qty":10,"unit":"кг","price":500}]
+Цена не указана — 0. Количество не указана — 1.`;
+
+  const resp = await fetch(WORKER_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
-    body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: prompt }], temperature: 0.1 })
+    headers: { 'Content-Type': 'application/json', 'X-Provider': 'qwen' },
+    body: JSON.stringify({
+      model: 'qwen-plus',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.1
+    })
   });
   const data = await resp.json();
   if (data.error) throw new Error(data.error.message);
@@ -423,196 +487,208 @@ async function askGroq(text) {
   return JSON.parse(raw);
 }
 
-async function processText(text, btnId) {
-  if (!text) { showToast('⚠️ Нет текста для обработки'); return; }
-  if (btnId) document.getElementById(btnId) && (document.getElementById(btnId).disabled = true);
-  showLoading(true, '🤖 ИИ разбирает данные...');
-  try {
-    const items = await askGroq(text);
-    addRowsToTable(items);
-    if (btnId === 'voiceBtn') {
-      voiceText = '';
-      document.getElementById('transcriptBox').value = '';
-      document.getElementById('micStatus').textContent = 'Нажмите → говорите весь список → нажмите стоп';
-    }
-    if (btnId === 'rawBtn') document.getElementById('rawText').value = '';
-    showToast(`✅ Добавлено ${items.length} позиций!`);
-  } catch(e) {
-    showToast('❌ Ошибка: ' + e.message);
-  }
-  if (btnId) document.getElementById(btnId) && (document.getElementById(btnId).disabled = false);
-  showLoading(false);
-}
-
-// ── ТАБЛИЦА ──
-function addRowsToTable(items) {
+// ── ТАБЛИЦЫ ──
+function addToTable(type, items) {
   items.forEach(item => {
-    const q = parseFloat(item.qty) || 1, p = parseFloat(item.price) || 0;
-    rows.push({ id: Date.now() + Math.random(), name: item.name || '', qty: q, unit: item.unit || 'кг', price: p, total: q * p });
+    const q = parseFloat(item.qty)||1, p = parseFloat(item.price)||0;
+    tables[type].push({ id: Date.now()+Math.random(), name: item.name||'', qty: q, unit: item.unit||'кг', price: p, total: q*p });
   });
-  renderTable();
-  document.getElementById('tableSection').style.display = 'block';
-  setTimeout(() => document.getElementById('tableSection').scrollIntoView({ behavior: 'smooth' }), 200);
+  renderTable(type);
+  updateGrandTotal();
 }
 
-function addRow() {
-  const id = Date.now() + Math.random();
-  rows.push({ id, name: '', qty: 1, unit: 'кг', price: 0, total: 0 });
-  renderTable();
-  document.getElementById('tableSection').style.display = 'block';
+function addManualRow() {
+  const id = Date.now()+Math.random();
+  tables.manual.push({ id, name:'', qty:1, unit:'кг', price:0, total:0 });
+  renderTable('manual');
+  document.getElementById('manualTableSection').style.display = 'block';
+  switchTab(3);
   setTimeout(() => {
-    const el = document.getElementById('n_' + id);
-    if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.focus(); }
+    const el = document.getElementById('n_manual_'+id);
+    if (el) { el.scrollIntoView({behavior:'smooth',block:'center'}); el.focus(); }
   }, 100);
+  updateGrandTotal();
 }
 
-function delRow(id) { rows = rows.filter(r => r.id !== id); renderTable(); showToast('🗑 Удалено'); }
-function clearAll() { rows = []; renderTable(); document.getElementById('tableSection').style.display = 'none'; showToast('🗑 Очищено'); }
-
-function recalc(id) {
-  const r = rows.find(r => r.id == id); if (!r) return;
-  const q = parseFloat(document.getElementById('q_' + id)?.value) || 0;
-  const p = parseFloat(document.getElementById('p_' + id)?.value) || 0;
-  r.qty = q; r.price = p; r.total = q * p;
-  const b = document.getElementById('b_' + id);
-  const d = document.getElementById('d_' + id);
-  if (b) b.textContent = r.total.toLocaleString('ru') + ' ₸';
-  if (d) d.textContent = r.total.toLocaleString('ru') + ' ₸';
-  updateTotal();
+function delRow(type, id) {
+  tables[type] = tables[type].filter(r => r.id !== id);
+  renderTable(type);
+  updateGrandTotal();
+  showToast('🗑 Удалено');
 }
 
-function updateTotal() {
-  const t = rows.reduce((s, r) => s + (r.total || 0), 0);
-  document.getElementById('totalLabel').textContent = t.toLocaleString('ru') + ' ₸';
+function clearTable(type) {
+  tables[type] = [];
+  renderTable(type);
+  updateGrandTotal();
+  showToast('🗑 Очищено');
 }
 
-function renderTable() {
-  const c = document.getElementById('rowsContainer');
-  c.innerHTML = '';
-  rows.forEach((row, i) => {
+function recalc(type, id) {
+  const r = tables[type].find(r => r.id == id); if (!r) return;
+  const q = parseFloat(document.getElementById(`q_${type}_${id}`)?.value)||0;
+  const p = parseFloat(document.getElementById(`p_${type}_${id}`)?.value)||0;
+  r.qty=q; r.price=p; r.total=q*p;
+  const b = document.getElementById(`b_${type}_${id}`);
+  const d = document.getElementById(`d_${type}_${id}`);
+  if (b) b.textContent = r.total.toLocaleString('ru')+' ₸';
+  if (d) d.textContent = r.total.toLocaleString('ru')+' ₸';
+  updateSectionTotal(type);
+  updateGrandTotal();
+}
+
+function updateSectionTotal(type) {
+  const total = tables[type].reduce((s,r)=>s+(r.total||0),0);
+  const el = document.getElementById(type+'Total');
+  if (el) el.textContent = total.toLocaleString('ru')+' ₸';
+}
+
+function updateGrandTotal() {
+  const allRows = [...tables.voice,...tables.photo,...tables.text,...tables.manual];
+  const total = allRows.reduce((s,r)=>s+(r.total||0),0);
+  const count = allRows.length;
+  document.getElementById('grandTotal').textContent = total.toLocaleString('ru')+' ₸';
+  document.getElementById('grandCount').textContent = count+' позиций';
+  document.getElementById('exportBtn').disabled = count===0;
+  ['voice','photo','text','manual'].forEach(t => updateSectionTotal(t));
+}
+
+function renderTable(type) {
+  const container = document.getElementById(type+'Rows');
+  const section = document.getElementById(type+'TableSection');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (!tables[type].length) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = 'block';
+
+  tables[type].forEach((row, i) => {
     const id = row.id;
-    const uOpts = units.map(u => `<option value="${u}" ${row.unit===u?'selected':''}>${u}</option>`).join('');
+    const uOpts = units.map(u=>`<option value="${u}" ${row.unit===u?'selected':''}>${u}</option>`).join('');
     const card = document.createElement('div');
     card.className = 'row-card';
     card.innerHTML = `
       <div class="row-top">
-        <span class="row-num">Товар ${i + 1}</span>
-        <span class="row-badge" id="b_${id}">${(row.total||0).toLocaleString('ru')} ₸</span>
-        <button class="del-btn" onclick="delRow(${id})">✕</button>
+        <span class="row-num">Товар ${i+1}</span>
+        <span class="row-badge" id="b_${type}_${id}">${(row.total||0).toLocaleString('ru')} ₸</span>
+        <button class="del-btn" onclick="delRow('${type}',${id})">✕</button>
       </div>
       <div class="field-label">Наименование</div>
-      <input class="field-input" id="n_${id}" type="text" value="${row.name}" placeholder="Мука пшеничная..." oninput="rows.find(r=>r.id==${id}).name=this.value">
+      <input class="field-input" id="n_${type}_${id}" type="text" value="${row.name}" placeholder="Мука пшеничная..." oninput="tables['${type}'].find(r=>r.id==${id}).name=this.value">
       <div class="row-grid">
         <div>
           <div class="field-label">Количество</div>
           <div class="counter-wrap">
-            <button class="cnt-btn" onclick="let r=rows.find(r=>r.id==${id});r.qty=Math.max(0,(parseFloat(r.qty)||0)-1);document.getElementById('q_${id}').value=r.qty;recalc(${id})">−</button>
-            <input class="cnt-input" id="q_${id}" type="number" value="${row.qty}" oninput="rows.find(r=>r.id==${id}).qty=parseFloat(this.value)||0;recalc(${id})">
-            <button class="cnt-btn" onclick="let r=rows.find(r=>r.id==${id});r.qty=(parseFloat(r.qty)||0)+1;document.getElementById('q_${id}').value=r.qty;recalc(${id})">+</button>
+            <button class="cnt-btn" onclick="let r=tables['${type}'].find(r=>r.id==${id});r.qty=Math.max(0,(parseFloat(r.qty)||0)-1);document.getElementById('q_${type}_${id}').value=r.qty;recalc('${type}',${id})">−</button>
+            <input class="cnt-input" id="q_${type}_${id}" type="number" value="${row.qty}" oninput="tables['${type}'].find(r=>r.id==${id}).qty=parseFloat(this.value)||0;recalc('${type}',${id})">
+            <button class="cnt-btn" onclick="let r=tables['${type}'].find(r=>r.id==${id});r.qty=(parseFloat(r.qty)||0)+1;document.getElementById('q_${type}_${id}').value=r.qty;recalc('${type}',${id})">+</button>
           </div>
         </div>
         <div>
           <div class="field-label">Единица</div>
-          <select class="unit-sel" onchange="rows.find(r=>r.id==${id}).unit=this.value">${uOpts}</select>
+          <select class="unit-sel" onchange="tables['${type}'].find(r=>r.id==${id}).unit=this.value">${uOpts}</select>
         </div>
         <div>
           <div class="field-label">Цена ₸</div>
-          <input class="price-inp" id="p_${id}" type="number" value="${row.price||0}" oninput="rows.find(r=>r.id==${id}).price=parseFloat(this.value)||0;recalc(${id})">
+          <input class="price-inp" id="p_${type}_${id}" type="number" value="${row.price||0}" oninput="tables['${type}'].find(r=>r.id==${id}).price=parseFloat(this.value)||0;recalc('${type}',${id})">
         </div>
       </div>
       <div style="margin-top:8px">
         <div class="field-label">Сумма</div>
-        <div class="total-disp" id="d_${id}">${(row.total||0).toLocaleString('ru')} ₸</div>
+        <div class="total-disp" id="d_${type}_${id}">${(row.total||0).toLocaleString('ru')} ₸</div>
       </div>`;
-    c.appendChild(card);
+    container.appendChild(card);
   });
-
-  // Обновляем заголовок
-  const sh = document.querySelector('.section-head span');
-  if (sh) sh.textContent = `Данные для iiko (${rows.length} позиций)`;
-
-  updateTotal();
-  document.getElementById('exportBtn').disabled = rows.length === 0;
+  updateSectionTotal(type);
 }
 
+// ── ЭКСПОРТ ──
 function exportCSV() {
-  rows.forEach(r => {
-    const n = document.getElementById('n_' + r.id);
-    const q = document.getElementById('q_' + r.id);
-    const p = document.getElementById('p_' + r.id);
-    if (n) r.name = n.value;
-    if (q) r.qty = parseFloat(q.value) || 0;
-    if (p) r.price = parseFloat(p.value) || 0;
-    r.total = r.qty * r.price;
+  const allRows = [
+    ...tables.voice.map(r=>({...r, source:'Голос'})),
+    ...tables.photo.map(r=>({...r, source:'Фото'})),
+    ...tables.text.map(r=>({...r, source:'Текст'})),
+    ...tables.manual.map(r=>({...r, source:'Вручную'}))
+  ];
+
+  // Синхронизируем значения из DOM
+  ['voice','photo','text','manual'].forEach(type => {
+    tables[type].forEach(r => {
+      const n=document.getElementById(`n_${type}_${r.id}`);
+      const q=document.getElementById(`q_${type}_${r.id}`);
+      const p=document.getElementById(`p_${type}_${r.id}`);
+      if(n) r.name=n.value;
+      if(q) r.qty=parseFloat(q.value)||0;
+      if(p) r.price=parseFloat(p.value)||0;
+      r.total=r.qty*r.price;
+    });
   });
-  const valid = rows.filter(r => r.name.trim());
-  if (!valid.length) { showToast('⚠️ Заполните хотя бы один товар'); return; }
-  const header = 'Наименование,Количество,Единица,Цена,Сумма\n';
-  const body = valid.map(r => `"${r.name.trim()}","${r.qty}","${r.unit}","${r.price}","${r.total}"`).join('\n');
-  const blob = new Blob(['\uFEFF' + header + body], { type: 'text/csv;charset=utf-8;' });
+
+  const valid = allRows.filter(r=>r.name.trim());
+  if (!valid.length) { showToast('⚠️ Нет данных'); return; }
+
+  const header = 'Источник,Наименование,Количество,Единица,Цена,Сумма\n';
+  const body = valid.map(r=>`"${r.source}","${r.name.trim()}","${r.qty}","${r.unit}","${r.price}","${r.total}"`).join('\n');
+  const totalAll = valid.reduce((s,r)=>s+(r.total||0),0);
+  const footer = `\n"ИТОГО","","${valid.length} позиций","","","${totalAll}"`;
+
+  const blob = new Blob(['\uFEFF'+header+body+footer],{type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = `накладная_${new Date().toLocaleDateString('ru')}.csv`; a.click();
+  a.href=url; a.download=`накладная_${new Date().toLocaleDateString('ru')}.csv`; a.click();
   URL.revokeObjectURL(url);
   showToast('📥 Скачано! Загрузите в iiko');
 }
 
-function showLoading(show, txt = '') {
-  document.getElementById('loading').style.display = show ? 'block' : 'none';
-  if (txt) document.getElementById('loadingText').textContent = txt;
-}
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
+function showLoading(show,txt=''){document.getElementById('loading').style.display=show?'block':'none';if(txt)document.getElementById('loadingText').textContent=txt;}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 
 // ── АВТОРИЗАЦИЯ ──
-const APP_PASSWORD = '45620';
+const APP_PASSWORD='45620';
 
-function checkPassword() {
-  const val = document.getElementById('lockInput').value;
-  const el = document.getElementById('lockInput');
-  if (val !== APP_PASSWORD) {
+function checkPassword(){
+  const val=document.getElementById('lockInput').value;
+  const el=document.getElementById('lockInput');
+  if(val!==APP_PASSWORD){
     el.classList.add('error');
-    document.getElementById('lockError').textContent = '❌ Неверный пароль';
-    el.value = '';
-    setTimeout(() => el.classList.remove('error'), 500);
+    document.getElementById('lockError').textContent='❌ Неверный пароль';
+    el.value='';
+    setTimeout(()=>el.classList.remove('error'),500);
     return;
   }
-  const saved = sessionStorage.getItem('iiko_groq');
-  if (saved) { GROQ_KEY = saved; unlockApp(); }
-  else {
-    document.getElementById('lockPassStep').style.display = 'none';
-    document.getElementById('lockKeyStep').style.display = 'block';
+  const saved=sessionStorage.getItem('iiko_qwen');
+  if(saved){QWEN_KEY=saved;unlockApp();}
+  else{
+    document.getElementById('lockPassStep').style.display='none';
+    document.getElementById('lockKeyStep').style.display='block';
     document.getElementById('keyInput').focus();
   }
 }
 
-function checkApiKey() {
-  const val = document.getElementById('keyInput').value.trim();
-  if (!val.startsWith('gsk_')) {
-    document.getElementById('keyError').textContent = '❌ Ключ должен начинаться с gsk_';
-    return;
-  }
-  GROQ_KEY = val;
-  sessionStorage.setItem('iiko_groq', val);
+function checkApiKey(){
+  const val=document.getElementById('keyInput').value.trim();
+  if(!val||val.length<10){document.getElementById('keyError').textContent='❌ Введите правильный ключ';return;}
+  QWEN_KEY=val;
+  sessionStorage.setItem('iiko_qwen',val);
   unlockApp();
 }
 
-function unlockApp() {
-  sessionStorage.setItem('iiko_auth', Date.now());
+function unlockApp(){
+  sessionStorage.setItem('iiko_auth',Date.now());
   document.getElementById('lockScreen').classList.add('hidden');
-  document.getElementById('mainApp').style.display = 'block';
+  document.getElementById('mainApp').style.display='block';
 }
 
-window.addEventListener('load', () => {
-  const auth = sessionStorage.getItem('iiko_auth');
-  const saved = sessionStorage.getItem('iiko_groq');
-  if (auth && saved && (Date.now() - parseInt(auth)) < 8 * 60 * 60 * 1000) {
-    GROQ_KEY = saved;
+window.addEventListener('load',()=>{
+  const auth=sessionStorage.getItem('iiko_auth');
+  const saved=sessionStorage.getItem('iiko_qwen');
+  if(auth&&saved&&(Date.now()-parseInt(auth))<8*60*60*1000){
+    QWEN_KEY=saved;
     document.getElementById('lockScreen').classList.add('hidden');
-    document.getElementById('mainApp').style.display = 'block';
+    document.getElementById('mainApp').style.display='block';
   }
 });
 </script>
