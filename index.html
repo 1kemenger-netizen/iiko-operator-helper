@@ -18,15 +18,14 @@
   .lock-icon{font-size:56px;margin:20px 0;}
   .lock-box{background:#fff;border-radius:20px;padding:24px;width:100%;max-width:360px;box-shadow:0 16px 48px rgba(0,0,0,0.15);}
   .lock-box-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;text-align:center;letter-spacing:1px;text-transform:uppercase;}
-  .lock-input{width:100%;border:2px solid var(--border);border-radius:12px;padding:13px 16px;font-family:'Manrope',sans-serif;font-size:18px;font-weight:600;color:var(--text);outline:none;background:var(--white);transition:all 0.2s;}
+  .lock-input{width:100%;border:2px solid var(--border);border-radius:12px;padding:13px 16px;font-family:'Manrope',sans-serif;font-size:18px;font-weight:600;color:var(--text);outline:none;background:var(--bg);text-align:center;letter-spacing:4px;margin-bottom:12px;}
   .lock-input:focus{border-color:var(--accent);}
   .lock-input.error{border-color:var(--danger);animation:shake 0.4s ease;}
   @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
-  .lock-btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);color:#fff;font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.3);transition:all 0.2s;}
+  .lock-btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);color:#fff;font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;cursor:pointer;}
   .lock-btn:active{transform:scale(0.98);}
   .lock-error{font-size:12px;color:var(--danger);font-weight:700;text-align:center;margin-top:8px;min-height:16px;}
   .lock-hint{font-size:11px;color:var(--text2);text-align:center;margin-top:10px;line-height:1.5;}
-  .lock-hint a{color:var(--accent);font-weight:700;}
 
   /* HEADER */
   .header{background:var(--accent);padding:16px;text-align:center;box-shadow:0 2px 16px rgba(0,184,148,0.3);}
@@ -47,18 +46,16 @@
   @keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
   /* VOICE */
-  .hint-box{background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--border);margin-bottom:12px;display:none;}
-  .hint-box.show{display:block;}
+  .hint-box{background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--border);margin-bottom:12px;}
   .hint-box strong{font-size:12px;font-weight:700;color:var(--accent);display:block;margin-bottom:4px;}
   .hint-box p{font-size:13px;color:var(--text2);line-height:1.5;font-style:italic;}
-  .hint-toggle{background:none;border:none;color:var(--text2);cursor:pointer;font-size:12px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:4px;}
   .voice-center{display:flex;flex-direction:column;align-items:center;padding:16px 0 12px;}
-  .mic-btn{width:100px;height:100px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);cursor:pointer;font-size:38px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,184,148,0.3);transition:all 0.2s;}
+  .mic-btn{width:100px;height:100px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);cursor:pointer;font-size:38px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,184,148,0.4);}
   .mic-btn.recording{background:linear-gradient(135deg,var(--danger),#fd79a8);animation:pulse 1.2s infinite;}
   @keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.06);}100%{transform:scale(1);}}
   .mic-status{margin-top:12px;font-size:13px;font-weight:600;color:var(--text2);text-align:center;}
   .mic-status.active{color:var(--danger);}
-  .transcript-area{width:100%;min-height:80px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;resize:vertical;}
+  .transcript-area{width:100%;min-height:80px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;resize:vertical;line-height:1.5;margin-bottom:10px;display:block;}
   .transcript-area:focus{border-color:var(--accent);}
 
   /* PHOTO */
@@ -67,7 +64,7 @@
   .photo-thumb{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--white);}
   .photo-thumb img{width:100%;height:100px;object-fit:cover;display:block;}
   .photo-thumb .rm-btn{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,0.6);color:#fff;border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-  .photo-add{border:2.5px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.2s;}
+  .photo-add{border:2.5px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100px;transition:all 0.2s;}
   .photo-add:active{border-color:var(--accent);}
   .photo-add .icon{font-size:28px;margin-bottom:4px;}
   .photo-add p{font-size:12px;color:var(--text2);}
@@ -75,10 +72,10 @@
   #fileInput{display:none;}
 
   /* BUTTONS */
-  .btn-ai{width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);color:#fff;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.3);transition:all 0.2s;}
+  .btn-ai{width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);color:#fff;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,184,148,0.35);margin-bottom:8px;}
   .btn-ai:disabled{background:#b2bec3;box-shadow:none;cursor:not-allowed;}
   .btn-ai:not(:disabled):active{transform:scale(0.98);}
-  .btn-clear-text{width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--text2);font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
+  .btn-clear-text{width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--text2);font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
 
   /* LOADING */
   .loading{text-align:center;padding:20px;color:var(--text2);font-size:13px;font-weight:600;display:none;}
@@ -98,17 +95,17 @@
   .del-btn{background:none;border:none;font-size:16px;cursor:pointer;color:#b2bec3;padding:3px 6px;border-radius:6px;}
   .del-btn:active{background:#ffe0db;color:var(--danger);}
   .field-label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;}
-  .field-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:9px 11px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:500;color:var(--text);outline:none;background:var(--white);transition:border-color 0.2s;}
+  .field-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:9px 11px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:500;color:var(--text);outline:none;background:var(--bg);margin-bottom:8px;}
   .field-input:focus{border-color:var(--accent);background:#fff;}
   .row-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;}
   .counter-wrap{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg);height:40px;}
   .cnt-btn{width:32px;height:100%;border:none;background:none;font-size:18px;color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .cnt-btn:active{background:rgba(0,184,148,0.12);}
   .cnt-input{flex:1;border:none;background:transparent;text-align:center;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:var(--text);outline:none;width:100%;}
-  .unit-sel{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:5px 6px;font-family:'Manrope',sans-serif;font-size:13px;color:var(--text);outline:none;background:var(--bg);height:40px;}
-  .price-inp{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:9px 8px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;color:var(--text);outline:none;background:var(--white);transition:border-color 0.2s;}
+  .unit-sel{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:5px 6px;font-family:'Manrope',sans-serif;font-size:13px;color:var(--text);outline:none;background:var(--bg);height:40px;-webkit-appearance:none;cursor:pointer;}
+  .price-inp{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:9px 8px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;color:var(--text);outline:none;background:var(--bg);text-align:right;height:40px;}
   .price-inp:focus{border-color:var(--accent);background:#fff;}
-  .total-disp{border:1.5px solid rgba(0,184,148,0.3);border-radius:10px;padding:9px 8px;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;color:var(--accent);background:rgba(0,184,148,0.08);}
+  .total-disp{border:1.5px solid rgba(0,184,148,0.3);border-radius:10px;padding:9px 8px;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;color:var(--accent);background:rgba(0,184,148,0.05);text-align:right;height:40px;display:flex;align-items:center;justify-content:flex-end;}
 
   /* BOTTOM */
   .bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);padding:10px 14px 22px;box-shadow:0 -4px 20px rgba(0,0,0,0.1);z-index:100;}
@@ -118,39 +115,14 @@
   .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .btn-add{padding:12px;border-radius:12px;border:2px dashed var(--accent);background:rgba(0,184,148,0.06);color:var(--accent);font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
   .btn-add:active{background:rgba(0,184,148,0.15);}
-  .btn-export{padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.3);}
+  .btn-export{padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.35);}
   .btn-export:disabled{background:#b2bec3;box-shadow:none;cursor:not-allowed;}
 
-  /* EXPORT MODAL */
-  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:1000;}
-  .modal-overlay.show{display:flex;}
-  .modal-box{background:#fff;border-radius:16px;padding:24px;max-width:320px;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
-  .modal-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px;}
-  .modal-text{font-size:14px;color:var(--text2);margin-bottom:16px;line-height:1.5;}
-  .modal-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-  .modal-btn{padding:10px;border-radius:10px;border:none;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
-  .modal-btn-cancel{background:var(--border);color:var(--text);}
-  .modal-btn-confirm{background:var(--accent);color:#fff;}
-
   /* TOAST */
-  .toast{position:fixed;bottom:120px;left:50%;transform:translateX(-50%) translateY(20px);background:#2d3436;color:#fff;padding:11px 18px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;transition:all 0.3s;pointer-events:none;}
+  .toast{position:fixed;bottom:120px;left:50%;transform:translateX(-50%) translateY(20px);background:#2d3436;color:#fff;padding:11px 18px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;transition:all 0.3s ease;z-index:999;white-space:nowrap;pointer-events:none;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
   .manual-info{background:var(--white);border-radius:12px;padding:14px;border:1px solid var(--border);font-size:13px;color:var(--text2);line-height:1.6;}
-
-  /* FAVORITES */
-  .favorites-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-bottom:12px;}
-  .fav-item{background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:8px;text-align:center;cursor:pointer;transition:all 0.2s;}
-  .fav-item:active{border-color:var(--accent);background:rgba(0,184,148,0.05);}
-  .fav-item-name{font-size:11px;font-weight:700;color:var(--text);word-break:break-word;}
-  .fav-item-qty{font-size:10px;color:var(--text2);}
-
-  /* HISTORY */
-  .history-list{display:flex;flex-direction:column;gap:8px;}
-  .history-item{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;transition:all 0.2s;}
-  .history-item:active{background:rgba(0,184,148,0.05);border-color:var(--accent);}
-  .history-name{font-size:12px;font-weight:700;color:var(--text);}
-  .history-qty{font-size:11px;color:var(--text2);}
 </style>
 </head>
 <body>
@@ -171,19 +143,7 @@
     <input class="lock-input" id="keyInput" type="password" placeholder="gsk_..." style="letter-spacing:1px;font-size:13px" onkeydown="if(event.key==='Enter')checkApiKey()">
     <button class="lock-btn" onclick="checkApiKey()">Войти →</button>
     <div class="lock-error" id="keyError"></div>
-    <div class="lock-hint">Бесплатно на <a href="https://console.groq.com/" target="_blank">console.groq.com</a></div>
-  </div>
-</div>
-
-<!-- EXPORT MODAL -->
-<div class="modal-overlay" id="exportModal">
-  <div class="modal-box">
-    <div class="modal-title">Скачать CSV?</div>
-    <div class="modal-text">Вы уверены? Файл будет готов к загрузке в iiko.</div>
-    <div class="modal-buttons">
-      <button class="modal-btn modal-btn-cancel" onclick="closeExportModal()">Отмена</button>
-      <button class="modal-btn modal-btn-confirm" onclick="confirmExport()">Скачать</button>
-    </div>
+    <div class="lock-hint">Бесплатно на <a href="https://console.groq.com/" target="_blank" style="color:var(--accent);font-weight:700">console.groq.com</a></div>
   </div>
 </div>
 
@@ -205,71 +165,55 @@
 
 <!-- ГОЛОС -->
 <div class="panel active" id="panel-0">
-  <button class="hint-toggle" onclick="toggleHint(0)">💡 Подсказка</button>
-  <div class="hint-box" id="hint-0">
-    <strong>Говорите весь список сразу:</strong>
-    <p>«Мука 10 кг по 500, масло 3 кг по 1200, говядина 5 кг по 3000»</p>
+  <div class="hint-box">
+    <strong>💡 Говорите весь список сразу:</strong>
+    <p>«Мука 10 кг по 500, масло 3 кг по 1200, говядина 5 кг по 3000» — всё за один раз!</p>
   </div>
   <div class="voice-center">
     <button class="mic-btn" id="micBtn" onclick="toggleVoice()">🎤</button>
-    <div class="mic-status" id="micStatus">Нажмите → говорите → нажмите стоп</div>
+    <div class="mic-status" id="micStatus">Нажмите → говорите весь список → нажмите стоп</div>
   </div>
   <div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;">Текст (можно отредактировать)</span>
+    <span style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;">Распознанный текст (можно исправить)</span>
     <button onclick="clearVoice()" style="background:none;border:none;font-size:12px;font-weight:700;color:var(--danger);cursor:pointer;">🗑 Очистить</button>
   </div>
-  <textarea class="transcript-area" id="transcriptBox" placeholder="Здесь появится текст..."></textarea>
-  <button class="btn-ai" id="voiceBtn" onclick="processText(voiceText,'voiceBtn')" disabled>✨ Добавить в таблицу</button>
+  <textarea class="transcript-area" id="transcriptBox" placeholder="Здесь появится текст записи. Вы можете исправить ошибки перед отправкой в ИИ." oninput="voiceText=this.value;document.getElementById('voiceBtn').disabled=!this.value.trim();"></textarea>
+  <button class="btn-ai" id="voiceBtn" onclick="processText(voiceText,'voiceBtn')" disabled>✨ Распознать → добавить все позиции в таблицу</button>
 </div>
 
 <!-- ФОТО -->
 <div class="panel" id="panel-1">
-  <button class="hint-toggle" onclick="toggleHint(1)">💡 Подсказка</button>
-  <div class="hint-box" id="hint-1">
-    <strong>Несколько накладных сразу:</strong>
-    <p>Добавьте одно или несколько фото — OCR прочитает текст.</p>
+  <div class="hint-box">
+    <strong>📷 Несколько накладных сразу:</strong>
+    <p>Добавьте одно или несколько фото — OCR прочитает текст, ИИ занесёт все товары в таблицу.</p>
   </div>
   <div class="photos-wrap">
     <div class="photos-grid" id="photosGrid">
       <div class="photo-add" onclick="document.getElementById('fileInput').click()">
         <div class="icon">📄</div>
         <p><strong>Добавить фото</strong></p>
+        <p>накладной</p>
       </div>
     </div>
   </div>
   <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="addPhoto(event)">
   <div id="photoCount" style="font-size:12px;color:var(--text2);text-align:center;margin-bottom:10px;"></div>
-  <button class="btn-ai" id="photoBtn" onclick="processAllPhotos()" disabled>✨ Распознать → в таблицу</button>
+  <button class="btn-ai" id="photoBtn" onclick="processAllPhotos()" disabled>✨ Распознать все накладные → в таблицу</button>
 </div>
 
 <!-- ТЕКСТ -->
 <div class="panel" id="panel-2">
-  <button class="hint-toggle" onclick="toggleHint(2)">💡 Подсказка</button>
-  <div class="hint-box" id="hint-2">
-    <strong>Вставьте текст накладной:</strong>
-    <p>Из WhatsApp, СМС или документа.</p>
+  <div class="hint-box">
+    <strong>📝 Вставьте текст накладной:</strong>
+    <p>Скопируйте из WhatsApp, СМС или документа — ИИ разберёт все товары автоматически.</p>
   </div>
-  <textarea id="rawText" style="width:100%;min-height:140px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;outline:none;margin-bottom:10px;resize:vertical;" placeholder="Вставьте текст здесь..."></textarea>
-  <button class="btn-ai" onclick="processText(document.getElementById('rawText').value.trim(),'rawBtn')">✨ Добавить в таблицу</button>
+  <textarea id="rawText" style="width:100%;min-height:140px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;outline:none;margin-bottom:10px;background:#fff;resize:vertical;line-height:1.5;" placeholder="Мука пшеничная 10 кг - 5000 тг&#10;Масло сливочное 3 кг - 3600 тг&#10;Говядина 5 кг - 15000 тг"></textarea>
+  <button class="btn-ai" onclick="processText(document.getElementById('rawText').value.trim(),'rawBtn')">✨ Распознать текст → добавить в таблицу</button>
 </div>
 
 <!-- ВРУЧНУЮ -->
 <div class="panel" id="panel-3">
-  <button class="hint-toggle" onclick="toggleHint(3)">💡 Подсказка</button>
-  <div class="hint-box" id="hint-3">
-    <strong>Ручной ввод:</strong>
-    <p>Нажмите «+ Добавить товар» внизу → заполните карточку.</p>
-  </div>
-  
-  <div style="margin-bottom:12px;">
-    <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">📌 Избранные товары</div>
-    <div class="favorites-grid" id="favoritesGrid"></div>
-  </div>
-
-  <div>
-    <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">🕐 История</div>
-    <div class="history-list" id="historyList"></div>
-  </div>
+  <div class="manual-info">Нажмите <strong>«+ Добавить товар»</strong> внизу → заполните карточку. Сумма считается автоматически.</div>
 </div>
 
 <div class="loading" id="loading"><div class="spinner"></div><span id="loadingText">Обрабатываю...</span></div>
@@ -284,44 +228,27 @@
 
 <div class="bottom-bar">
   <div class="total-sum">
-    <span class="total-sum-label">Общая сумма:</span>
+    <span class="total-sum-label">Общая сумма накладной:</span>
     <span class="total-sum-amount" id="totalLabel">0 ₸</span>
   </div>
   <div class="btn-row">
-    <button class="btn-add" onclick="addRow()">+ Товар</button>
-    <button class="btn-export" id="exportBtn" onclick="openExportModal()" disabled>📥 CSV</button>
+    <button class="btn-add" onclick="addRow()">+ Добавить товар</button>
+    <button class="btn-export" id="exportBtn" onclick="exportCSV()" disabled>📥 Скачать CSV</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
 const OCR_KEY = 'K87470080288957';
-const APP_PASSWORD = '45620';
+const WORKER_URL = 'https://small-shadow-b1ff.1kemenger.workers.dev';
 let GROQ_KEY = '';
 let rows = [], photos = [], recognition = null, isRecording = false, voiceText = '';
-let favorites = [], history = [];
 const units = ['кг','г','л','мл','шт','уп','порц'];
-
-// ── HINTS ──
-function toggleHint(tab) {
-  const hint = document.getElementById(`hint-${tab}`);
-  hint.classList.toggle('show');
-  localStorage.setItem(`hint-${tab}`, hint.classList.contains('show') ? '1' : '0');
-}
-
-function initHints() {
-  for (let i = 0; i < 4; i++) {
-    const show = localStorage.getItem(`hint-${i}`) === '1';
-    const hint = document.getElementById(`hint-${i}`);
-    if (show) hint.classList.add('show');
-  }
-}
 
 // ── TABS ──
 function switchTab(n) {
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===n));
   document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===n));
-  if (n === 3) renderFavoritesAndHistory();
 }
 
 // ── ГОЛОС ──
@@ -340,7 +267,7 @@ function startRec() {
     isRecording = true;
     document.getElementById('micBtn').classList.add('recording');
     document.getElementById('micBtn').textContent = '⏹';
-    document.getElementById('micStatus').textContent = '● Говорите...';
+    document.getElementById('micStatus').textContent = '● Говорите весь список...';
     document.getElementById('micStatus').classList.add('active');
   };
 
@@ -360,7 +287,7 @@ function startRec() {
     isRecording = false;
     document.getElementById('micBtn').classList.remove('recording');
     document.getElementById('micBtn').textContent = '🎤';
-    document.getElementById('micStatus').textContent = 'Готово!';
+    document.getElementById('micStatus').textContent = 'Готово! Проверьте текст и нажмите «Распознать»';
     document.getElementById('micStatus').classList.remove('active');
     voiceText = document.getElementById('transcriptBox').value.trim();
     if (voiceText) document.getElementById('voiceBtn').disabled = false;
@@ -375,7 +302,7 @@ function clearVoice() {
   voiceText = '';
   document.getElementById('transcriptBox').value = '';
   document.getElementById('voiceBtn').disabled = true;
-  document.getElementById('micStatus').textContent = 'Нажмите → говорите → нажмите стоп';
+  document.getElementById('micStatus').textContent = 'Нажмите → говорите весь список → нажмите стоп';
   showToast('🗑 Очищено');
 }
 
@@ -387,7 +314,7 @@ function addPhoto(e) {
     photos.push({ data: ev.target.result, mime: file.type || 'image/jpeg' });
     renderPhotos();
     document.getElementById('photoBtn').disabled = false;
-    showToast('📷 Добавлено');
+    showToast('📷 Фото ' + photos.length + ' добавлено');
   };
   reader.readAsDataURL(file);
   e.target.value = '';
@@ -413,53 +340,50 @@ function renderPhotos() {
   add.onclick = () => document.getElementById('fileInput').click();
   add.innerHTML = `<div class="icon">➕</div><p><strong>Ещё фото</strong></p>`;
   grid.appendChild(add);
-  document.getElementById('photoCount').textContent = photos.length ? `Загружено: ${photos.length}` : '';
+  document.getElementById('photoCount').textContent = photos.length ? `Загружено: ${photos.length} фото — ИИ обработает все сразу` : '';
 }
 
 async function processAllPhotos() {
   if (!photos.length) return;
   document.getElementById('photoBtn').disabled = true;
-  let allText = '';
+  showLoading(true, `📷 Gemini читает ${photos.length} фото...`);
 
-  for (let i = 0; i < photos.length; i++) {
-    showLoading(true, `📷 OCR ${i+1}/${photos.length}...`);
-    try {
-      const fd = new FormData();
-      fd.append('base64Image', photos[i].data);
-      fd.append('language', 'rus+eng');
-      fd.append('isOverlayRequired', 'false');
-      fd.append('OCREngine', '2');
-      fd.append('scale', 'true');
-      fd.append('isTable', 'true');
-
-      const r = await fetch('https://api.ocr.space/parse/image', {
-        method: 'POST',
-        headers: { 'apikey': OCR_KEY },
-        body: fd
-      });
-      const d = await r.json();
-      const txt = d.ParsedResults?.[0]?.ParsedText || '';
-      if (txt.trim()) allText += `\nНакладная ${i+1}:\n${txt}`;
-    } catch(e) {
-      showToast(`⚠️ Ошибка OCR`);
-    }
-  }
-
-  if (!allText.trim()) {
-    showToast('❌ Текст не распознан');
-    document.getElementById('photoBtn').disabled = false;
-    showLoading(false);
-    return;
-  }
-
-  showLoading(true, '🤖 ИИ обрабатывает...');
   try {
-    const items = await askGroq(allText);
+    // Формируем запрос к Gemini через Cloudflare Worker
+    const parts = [];
+    
+    photos.forEach((p, i) => {
+      parts.push({ text: `Накладная ${i+1}:` });
+      const base64 = p.data.split(',')[1];
+      const mime = p.mime || 'image/jpeg';
+      parts.push({ inline_data: { mime_type: mime, data: base64 } });
+    });
+    
+    parts.push({ text: `Ты специализированный ИИ для распознавания накладных ресторана.
+Извлеки ВСЕ товары из всех накладных выше.
+Верни ТОЛЬКО чистый JSON без markdown:
+[{"name":"Название товара","qty":10,"unit":"кг","price":500}]
+Если цена не указана — 0. Если количество не указано — 1. Единица по умолчанию — кг.` });
+
+    const resp = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts }]
+      })
+    });
+
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error.message);
+    
+    const raw = data.candidates[0].content.parts[0].text.trim().replace(/```json|```/g, '').trim();
+    const items = JSON.parse(raw);
+    
     addRowsToTable(items);
     photos = [];
     renderPhotos();
     document.getElementById('photoBtn').disabled = true;
-    showToast(`✅ ${items.length} позиций!`);
+    showToast(`✅ Gemini распознал ${items.length} позиций!`);
   } catch(e) {
     showToast('❌ Ошибка: ' + e.message);
     document.getElementById('photoBtn').disabled = false;
@@ -488,19 +412,19 @@ async function askGroq(text) {
 }
 
 async function processText(text, btnId) {
-  if (!text) { showToast('⚠️ Нет текста'); return; }
+  if (!text) { showToast('⚠️ Нет текста для обработки'); return; }
   if (btnId) document.getElementById(btnId) && (document.getElementById(btnId).disabled = true);
-  showLoading(true, '🤖 Обрабатываю...');
+  showLoading(true, '🤖 ИИ разбирает данные...');
   try {
     const items = await askGroq(text);
     addRowsToTable(items);
     if (btnId === 'voiceBtn') {
       voiceText = '';
       document.getElementById('transcriptBox').value = '';
-      document.getElementById('micStatus').textContent = 'Нажмите → говорите → нажмите стоп';
+      document.getElementById('micStatus').textContent = 'Нажмите → говорите весь список → нажмите стоп';
     }
     if (btnId === 'rawBtn') document.getElementById('rawText').value = '';
-    showToast(`✅ ${items.length} позиций!`);
+    showToast(`✅ Добавлено ${items.length} позиций!`);
   } catch(e) {
     showToast('❌ Ошибка: ' + e.message);
   }
@@ -513,7 +437,6 @@ function addRowsToTable(items) {
   items.forEach(item => {
     const q = parseFloat(item.qty) || 1, p = parseFloat(item.price) || 0;
     rows.push({ id: Date.now() + Math.random(), name: item.name || '', qty: q, unit: item.unit || 'кг', price: p, total: q * p });
-    addToHistory(item.name || '', q, item.unit || 'кг');
   });
   renderTable();
   document.getElementById('tableSection').style.display = 'block';
@@ -529,73 +452,6 @@ function addRow() {
     const el = document.getElementById('n_' + id);
     if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.focus(); }
   }, 100);
-}
-
-function addToHistory(name, qty, unit) {
-  history = history.filter(h => h.name !== name);
-  history.unshift({ name, qty, unit, time: Date.now() });
-  if (history.length > 10) history.pop();
-  localStorage.setItem('iiko_history', JSON.stringify(history));
-  addToFavorites(name, qty, unit);
-}
-
-function addToFavorites(name, qty, unit) {
-  const existing = favorites.find(f => f.name === name);
-  if (existing) {
-    existing.count++;
-  } else {
-    favorites.push({ name, qty, unit, count: 1 });
-  }
-  favorites.sort((a, b) => b.count - a.count);
-  if (favorites.length > 15) favorites.pop();
-  localStorage.setItem('iiko_favorites', JSON.stringify(favorites));
-}
-
-function loadFavoritesAndHistory() {
-  const fav = localStorage.getItem('iiko_favorites');
-  const hist = localStorage.getItem('iiko_history');
-  if (fav) favorites = JSON.parse(fav);
-  if (hist) history = JSON.parse(hist);
-}
-
-function renderFavoritesAndHistory() {
-  // Favorites
-  const favGrid = document.getElementById('favoritesGrid');
-  favGrid.innerHTML = '';
-  favorites.slice(0, 10).forEach(fav => {
-    const div = document.createElement('div');
-    div.className = 'fav-item';
-    div.onclick = () => addFavToTable(fav);
-    div.innerHTML = `<div class="fav-item-name">${fav.name}</div><div class="fav-item-qty">${fav.qty}${fav.unit}</div>`;
-    favGrid.appendChild(div);
-  });
-
-  // History
-  const histList = document.getElementById('historyList');
-  histList.innerHTML = '';
-  history.slice(0, 8).forEach(h => {
-    const div = document.createElement('div');
-    div.className = 'history-item';
-    div.onclick = () => addHistToTable(h);
-    div.innerHTML = `<div class="history-name">${h.name}</div><div class="history-qty">${h.qty}${h.unit}</div>`;
-    histList.appendChild(div);
-  });
-}
-
-function addFavToTable(fav) {
-  const id = Date.now() + Math.random();
-  rows.push({ id, name: fav.name, qty: fav.qty, unit: fav.unit, price: 0, total: 0 });
-  renderTable();
-  document.getElementById('tableSection').style.display = 'block';
-  showToast('✅ Добавлено');
-}
-
-function addHistToTable(h) {
-  const id = Date.now() + Math.random();
-  rows.push({ id, name: h.name, qty: h.qty, unit: h.unit, price: 0, total: 0 });
-  renderTable();
-  document.getElementById('tableSection').style.display = 'block';
-  showToast('✅ Добавлено');
 }
 
 function delRow(id) { rows = rows.filter(r => r.id !== id); renderTable(); showToast('🗑 Удалено'); }
@@ -633,7 +489,7 @@ function renderTable() {
         <button class="del-btn" onclick="delRow(${id})">✕</button>
       </div>
       <div class="field-label">Наименование</div>
-      <input class="field-input" id="n_${id}" type="text" value="${row.name}" placeholder="Название..." oninput="rows.find(r=>r.id==${id}).name=this.value">
+      <input class="field-input" id="n_${id}" type="text" value="${row.name}" placeholder="Мука пшеничная..." oninput="rows.find(r=>r.id==${id}).name=this.value">
       <div class="row-grid">
         <div>
           <div class="field-label">Количество</div>
@@ -659,25 +515,12 @@ function renderTable() {
     c.appendChild(card);
   });
 
+  // Обновляем заголовок
   const sh = document.querySelector('.section-head span');
   if (sh) sh.textContent = `Данные для iiko (${rows.length} позиций)`;
 
   updateTotal();
   document.getElementById('exportBtn').disabled = rows.length === 0;
-}
-
-// ── EXPORT MODAL ──
-function openExportModal() {
-  document.getElementById('exportModal').classList.add('show');
-}
-
-function closeExportModal() {
-  document.getElementById('exportModal').classList.remove('show');
-}
-
-function confirmExport() {
-  closeExportModal();
-  exportCSV();
 }
 
 function exportCSV() {
@@ -691,7 +534,7 @@ function exportCSV() {
     r.total = r.qty * r.price;
   });
   const valid = rows.filter(r => r.name.trim());
-  if (!valid.length) { showToast('⚠️ Заполните товары'); return; }
+  if (!valid.length) { showToast('⚠️ Заполните хотя бы один товар'); return; }
   const header = 'Наименование,Количество,Единица,Цена,Сумма\n';
   const body = valid.map(r => `"${r.name.trim()}","${r.qty}","${r.unit}","${r.price}","${r.total}"`).join('\n');
   const blob = new Blob(['\uFEFF' + header + body], { type: 'text/csv;charset=utf-8;' });
@@ -699,14 +542,13 @@ function exportCSV() {
   const a = document.createElement('a');
   a.href = url; a.download = `накладная_${new Date().toLocaleDateString('ru')}.csv`; a.click();
   URL.revokeObjectURL(url);
-  showToast('📥 Готово!');
+  showToast('📥 Скачано! Загрузите в iiko');
 }
 
 function showLoading(show, txt = '') {
   document.getElementById('loading').style.display = show ? 'block' : 'none';
   if (txt) document.getElementById('loadingText').textContent = txt;
 }
-
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
@@ -714,17 +556,19 @@ function showToast(msg) {
 }
 
 // ── АВТОРИЗАЦИЯ ──
+const APP_PASSWORD = '45620';
+
 function checkPassword() {
   const val = document.getElementById('lockInput').value;
   const el = document.getElementById('lockInput');
   if (val !== APP_PASSWORD) {
     el.classList.add('error');
-    document.getElementById('lockError').textContent = '❌ Неверно';
+    document.getElementById('lockError').textContent = '❌ Неверный пароль';
     el.value = '';
     setTimeout(() => el.classList.remove('error'), 500);
     return;
   }
-  const saved = localStorage.getItem('iiko_groq');
+  const saved = sessionStorage.getItem('iiko_groq');
   if (saved) { GROQ_KEY = saved; unlockApp(); }
   else {
     document.getElementById('lockPassStep').style.display = 'none';
@@ -736,32 +580,27 @@ function checkPassword() {
 function checkApiKey() {
   const val = document.getElementById('keyInput').value.trim();
   if (!val.startsWith('gsk_')) {
-    document.getElementById('keyError').textContent = '❌ Должен начинаться с gsk_';
+    document.getElementById('keyError').textContent = '❌ Ключ должен начинаться с gsk_';
     return;
   }
   GROQ_KEY = val;
-  localStorage.setItem('iiko_groq', val);
+  sessionStorage.setItem('iiko_groq', val);
   unlockApp();
 }
 
 function unlockApp() {
-  localStorage.setItem('iiko_auth', Date.now());
+  sessionStorage.setItem('iiko_auth', Date.now());
   document.getElementById('lockScreen').classList.add('hidden');
   document.getElementById('mainApp').style.display = 'block';
-  loadFavoritesAndHistory();
-  initHints();
 }
 
 window.addEventListener('load', () => {
-  const auth = localStorage.getItem('iiko_auth');
-  const saved = localStorage.getItem('iiko_groq');
-  const SESSION_TIME = 24 * 60 * 60 * 1000; // 24 часа
-  if (auth && saved && (Date.now() - parseInt(auth)) < SESSION_TIME) {
+  const auth = sessionStorage.getItem('iiko_auth');
+  const saved = sessionStorage.getItem('iiko_groq');
+  if (auth && saved && (Date.now() - parseInt(auth)) < 8 * 60 * 60 * 1000) {
     GROQ_KEY = saved;
     document.getElementById('lockScreen').classList.add('hidden');
     document.getElementById('mainApp').style.display = 'block';
-    loadFavoritesAndHistory();
-    initHints();
   }
 });
 </script>
