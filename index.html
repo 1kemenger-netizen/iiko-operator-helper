@@ -346,44 +346,56 @@ function renderPhotos() {
 async function processAllPhotos() {
   if (!photos.length) return;
   document.getElementById('photoBtn').disabled = true;
-  showLoading(true, `📷 Gemini читает ${photos.length} фото...`);
+  showLoading(true, `📷 Qwen читает ${photos.length} фото...`);
 
   try {
-    // Формируем запрос к Gemini через Cloudflare Worker
-    const parts = [];
+    // Формируем сообщение для Qwen с фото
+    const content = [];
     
     photos.forEach((p, i) => {
-      parts.push({ text: `Накладная ${i+1}:` });
-      const base64 = p.data.split(',')[1];
-      const mime = p.mime || 'image/jpeg';
-      parts.push({ inline_data: { mime_type: mime, data: base64 } });
+      content.push({
+        type: 'text',
+        text: `Накладная ${i+1}:`
+      });
+      content.push({
+        type: 'image_url',
+        image_url: { url: p.data }
+      });
     });
     
-    parts.push({ text: `Ты специализированный ИИ для распознавания накладных ресторана.
-Извлеки ВСЕ товары из всех накладных выше.
+    content.push({
+      type: 'text',
+      text: `Ты специализированный ИИ для распознавания накладных ресторана.
+Извлеки ВСЕ товары из всех накладных выше включая рукописный текст.
 Верни ТОЛЬКО чистый JSON без markdown:
 [{"name":"Название товара","qty":10,"unit":"кг","price":500}]
-Если цена не указана — 0. Если количество не указано — 1. Единица по умолчанию — кг.` });
+Если цена не указана — 0. Если количество не указано — 1. Единица по умолчанию — кг.`
+    });
 
     const resp = await fetch(WORKER_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Provider': 'qwen'
+      },
       body: JSON.stringify({
-        contents: [{ parts }]
+        model: 'qwen-vl-max',
+        messages: [{ role: 'user', content }],
+        temperature: 0.1
       })
     });
 
     const data = await resp.json();
     if (data.error) throw new Error(data.error.message);
     
-    const raw = data.candidates[0].content.parts[0].text.trim().replace(/```json|```/g, '').trim();
+    const raw = data.choices[0].message.content.trim().replace(/```json|```/g, '').trim();
     const items = JSON.parse(raw);
     
     addRowsToTable(items);
     photos = [];
     renderPhotos();
     document.getElementById('photoBtn').disabled = true;
-    showToast(`✅ Gemini распознал ${items.length} позиций!`);
+    showToast(`✅ Qwen распознал ${items.length} позиций!`);
   } catch(e) {
     showToast('❌ Ошибка: ' + e.message);
     document.getElementById('photoBtn').disabled = false;
