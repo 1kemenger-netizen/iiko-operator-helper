@@ -479,9 +479,18 @@ async function processPhotos() {
 
 // ── GEMINI ──
 async function callGemini(parts) {
-  const resp = await fetch(GEMINI_URL_BASE + API_KEY, {
+  // Support both AIza... and AQ. key formats
+  const isAQKey = API_KEY.startsWith('AQ.');
+  const url = isAQKey
+    ? 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
+    : GEMINI_URL_BASE + API_KEY;
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (isAQKey) headers['Authorization'] = 'Bearer ' + API_KEY;
+
+  const resp = await fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: headers,
     body: JSON.stringify({ contents: [{ parts }] })
   });
   const data = await resp.json();
