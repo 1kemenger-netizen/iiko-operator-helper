@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>iiko — Помощник</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap');
+  :root {
+    --bg:#f0f4f8; --white:#fff; --accent:#00b894; --accent-dark:#00956e;
+    --danger:#e17055; --text:#1e272e; --text2:#636e72; --border:#dfe6e9;
+    --shadow:0 2px 12px rgba(0,0,0,0.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  .lock-screen{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#00b894,#00cec9);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;}
+  .lock-screen.hidden{display:none;}
+  .lock-logo{font-family:'Unbounded',sans-serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:8px;}
+  .lock-title{font-family:'Unbounded',sans-serif;font-size:22px;color:#fff;font-weight:700;margin-bottom:6px;text-align:center;}
+  .lock-sub{font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:40px;text-align:center;}
+  .lock-icon{font-size:64px;margin-bottom:28px;}
+  .lock-box{background:#fff;border-radius:20px;padding:28px 24px;width:100%;max-width:360px;box-shadow:0 16px 48px rgba(0,0,0,0.15);}
+  .lock-box-title{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:12px;text-align:center;letter-spacing:1px;text-transform:uppercase;}
+  .lock-input{width:100%;border:2px solid var(--border);border-radius:12px;padding:14px 16px;font-family:'Manrope',sans-serif;font-size:18px;font-weight:600;color:var(--text);outline:none;background:var(--bg);text-align:center;letter-spacing:4px;margin-bottom:14px;}
+  .lock-input:focus{border-color:var(--accent);}
+  .lock-input.error{border-color:var(--danger);animation:shake 0.4s ease;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+  .lock-btn{width:100%;padding:16px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);color:#fff;font-family:'Manrope',sans-serif;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,184,148,0.35);}
+  .lock-btn:active{transform:scale(0.98);}
+  .lock-error{font-size:12px;color:var(--danger);font-weight:700;text-align:center;margin-top:10px;min-height:18px;}
+  .lock-hint{font-size:11px;color:var(--text2);text-align:center;margin-top:12px;line-height:1.5;}
+  .header{background:var(--accent);padding:18px 16px 20px;text-align:center;box-shadow:0 2px 16px rgba(0,184,148,0.3);}
+  .header-logo{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:3px;}
+  .header h1{font-family:'Unbounded',sans-serif;font-size:17px;color:#fff;font-weight:700;}
+  .header p{font-size:11px;color:rgba(255,255,255,0.75);margin-top:3px;}
+  .api-ok{background:#d4edda;border-bottom:2px solid #00b894;padding:10px 16px;font-size:12px;font-weight:700;color:var(--accent-dark);display:flex;align-items:center;gap:6px;}
+  .tabs{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--white);border-bottom:2px solid var(--border);}
+  .tab{padding:14px 8px;text-align:center;cursor:pointer;font-size:12px;font-weight:700;color:var(--text2);border-bottom:3px solid transparent;transition:all 0.2s;}
+  .tab .tab-icon{font-size:20px;display:block;margin-bottom:3px;}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .panel{display:none;padding:16px;}
+  .panel.active{display:block;animation:fadeUp 0.25s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .hint-box{background:var(--white);border-radius:12px;padding:14px;border:1px solid var(--border);margin-bottom:14px;}
+  .hint-box strong{font-size:12px;font-weight:700;color:var(--accent);display:block;margin-bottom:5px;}
+  .hint-box p{font-size:13px;color:var(--text2);line-height:1.6;font-style:italic;}
+  .voice-center{display:flex;flex-direction:column;align-items:center;padding:20px 0 14px;}
+  .mic-btn{width:110px;height:110px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);cursor:pointer;font-size:42px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,184,148,0.4);}
+  .mic-btn.recording{background:linear-gradient(135deg,var(--danger),#fd79a8);animation:pulse 1.2s infinite;}
+  @keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.06);}100%{transform:scale(1);}}
+  .mic-status{margin-top:14px;font-size:13px;font-weight:600;color:var(--text2);}
+  .mic-status.active{color:var(--danger);}
+  .manual-info{background:var(--white);border-radius:12px;padding:14px;border:1px solid var(--border);font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:14px;}
+  .btn-ai{width:100%;padding:16px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);color:#fff;font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,184,148,0.35);}
+  .btn-ai:disabled{background:#b2bec3;box-shadow:none;cursor:not-allowed;}
+  .btn-ai:not(:disabled):active{transform:scale(0.98);}
+  .loading{text-align:center;padding:24px;color:var(--text2);font-size:13px;font-weight:600;display:none;}
+  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 10px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .table-section{padding:16px;padding-bottom:170px;display:none;}
+  .section-head{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+  .clear-btn{font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;color:var(--danger);background:none;border:none;cursor:pointer;}
+  .row-card{background:var(--white);border-radius:14px;padding:13px;margin-bottom:10px;box-shadow:var(--shadow);border:1.5px solid transparent;animation:slideIn 0.2s ease;}
+  @keyframes slideIn{from{opacity:0;transform:translateY(-5px);}to{opacity:1;transform:translateY(0);}}
+  .row-card:focus-within{border-color:var(--accent);}
+  .row-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .row-num{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--text2);text-transform:uppercase;}
+  .row-total-badge{background:rgba(0,184,148,0.1);border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700;color:var(--accent);}
+  .del-btn{background:none;border:none;font-size:17px;cursor:pointer;color:#b2bec3;padding:3px 8px;border-radius:6px;}
+  .del-btn:active{background:#ffe0db;color:var(--danger);}
+  .field-label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+  .field-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:500;color:var(--text);outline:none;background:var(--bg);margin-bottom:8px;}
+  .field-input:focus{border-color:var(--accent);background:#fff;}
+  .row-grid3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;}
+  .counter-wrap{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg);height:42px;}
+  .counter-btn{width:34px;height:100%;border:none;background:none;font-size:18px;color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .counter-btn:active{background:rgba(0,184,148,0.12);}
+  .counter-input{flex:1;border:none;background:transparent;text-align:center;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:var(--text);outline:none;width:100%;}
+  .unit-select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:6px 8px;font-family:'Manrope',sans-serif;font-size:13px;color:var(--text);outline:none;background:var(--bg);height:42px;-webkit-appearance:none;cursor:pointer;}
+  .price-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 8px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;color:var(--text);outline:none;background:var(--bg);text-align:right;height:42px;}
+  .price-input:focus{border-color:var(--accent);background:#fff;}
+  .total-display{border:1.5px solid rgba(0,184,148,0.3);border-radius:10px;padding:10px 8px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;color:var(--accent);background:rgba(0,184,148,0.05);text-align:right;height:42px;display:flex;align-items:center;justify-content:flex-end;}
+  .bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--white);padding:10px 16px 24px;box-shadow:0 -4px 20px rgba(0,0,0,0.1);z-index:100;}
+  .total-summary{background:linear-gradient(135deg,var(--accent),#00cec9);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .total-summary-label{font-size:11px;color:rgba(255,255,255,0.85);font-weight:600;}
+  .total-summary-amount{font-family:'Unbounded',sans-serif;font-size:15px;color:#fff;font-weight:700;}
+  .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .btn-add{padding:13px;border-radius:12px;border:2px dashed var(--accent);background:rgba(0,184,148,0.06);color:var(--accent);font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
+  .btn-add:active{background:rgba(0,184,148,0.15);}
+  .btn-export{padding:13px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,184,148,0.35);}
+  .btn-export:disabled{background:#b2bec3;box-shadow:none;cursor:not-allowed;}
+  .toast{position:fixed;bottom:130px;left:50%;transform:translateX(-50%) translateY(20px);background:#2d3436;color:#fff;padding:12px 20px;border-radius:24px;font-size:13px;font-weight:600;opacity:0;transition:all 0.3s ease;z-index:999;white-space:nowrap;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-logo">iiko</div>
+  <div class="lock-title">Помощник оператора</div>
+  <div class="lock-sub">Защищено паролем</div>
+  <div class="lock-icon">🔐</div>
+  <div class="lock-box" id="lockPassStep">
+    <div class="lock-box-title">Введите пароль</div>
+    <input class="lock-input" id="lockInput" type="password" placeholder="••••••" maxlength="20" onkeydown="if(event.key==='Enter')checkPassword()">
+    <button class="lock-btn" onclick="checkPassword()">Далее →</button>
+    <div class="lock-error" id="lockError"></div>
+  </div>
+  <div class="lock-box" id="lockKeyStep" style="display:none">
+    <div class="lock-box-title">🔑 Введите API ключ Groq</div>
+    <input class="lock-input" id="keyInput" type="password" placeholder="gsk_..." style="letter-spacing:1px;font-size:14px" onkeydown="if(event.key==='Enter')checkApiKey()">
+    <button class="lock-btn" onclick="checkApiKey()">Войти →</button>
+    <div class="lock-error" id="keyError"></div>
+    <div class="lock-hint">Получите бесплатно на<br><a href="https://console.groq.com/" target="_blank" style="color:var(--accent);font-weight:700">console.groq.com</a></div>
+  </div>
+</div>
+
+<div id="mainApp" style="display:none">
+<div class="header">
+  <div class="header-logo">iiko</div>
+  <h1>Помощник оператора</h1>
+  <p>Голос · Текст · Вручную → CSV для iiko</p>
+</div>
+<div class="api-ok">✅ Groq AI активен — работает без блокировок</div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('voice')"><span class="tab-icon">🎤</span>Голос</div>
+  <div class="tab" onclick="switchTab('text')"><span class="tab-icon">📝</span>Текст</div>
+  <div class="tab" onclick="switchTab('manual')"><span class="tab-icon">✏️</span>Вручную</div>
+</div>
+
+<!-- VOICE -->
+<div class="panel active" id="panel-voice">
+  <div class="hint-box">
+    <strong>💡 Как говорить:</strong>
+    <p>«Мука 10 кг по 500 тенге, масло 3 кг по 1200, говядина 5 кг взяли на 15000»</p>
+  </div>
+  <div class="voice-center">
+    <button class="mic-btn" id="micBtn" onclick="toggleVoice()">🎤</button>
+    <div class="mic-status" id="micStatus">Нажмите для записи</div>
+  </div>
+  <div id="transcriptWrap" style="display:none;margin-bottom:14px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;">✏️ Редактируйте текст</span>
+      <button onclick="clearTranscript()" style="background:none;border:none;font-size:12px;font-weight:700;color:var(--danger);cursor:pointer;">🗑 Очистить</button>
+    </div>
+    <textarea id="transcriptBox" style="width:100%;min-height:90px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;resize:vertical;line-height:1.6;" placeholder="Здесь появится текст. Исправьте если нужно." oninput="transcript=this.value;document.getElementById('processVoiceBtn').disabled=!this.value.trim();"></textarea>
+  </div>
+  <button class="btn-ai" id="processVoiceBtn" onclick="processVoice()" disabled>✨ Распознать → добавить в таблицу</button>
+</div>
+
+<!-- TEXT -->
+<div class="panel" id="panel-text">
+  <div class="hint-box">
+    <strong>📝 Вставьте текст накладной:</strong>
+    <p>Скопируйте текст из мессенджера, СМС или документа — ИИ сам разберёт товары.</p>
+  </div>
+  <textarea id="rawInvoiceText" style="width:100%;min-height:150px;border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Manrope',sans-serif;font-size:14px;outline:none;margin-bottom:14px;background:#fff;resize:vertical;" placeholder="Мука пшеничная 10 кг - 5000 тг&#10;Масло сливочное 3 кг - 3600 тг&#10;Говядина 5 кг - 15000 тг"></textarea>
+  <button class="btn-ai" onclick="processRawText()">✨ Распознать текст → добавить в таблицу</button>
+</div>
+
+<!-- MANUAL -->
+<div class="panel" id="panel-manual">
+  <div class="manual-info">Нажмите <strong>«+ Добавить товар»</strong> внизу и заполните вручную.</div>
+</div>
+
+<div class="loading" id="loading"><div class="spinner"></div><span id="loadingText">ИИ обрабатывает...</span></div>
+
+<div class="table-section" id="tableSection">
+  <div class="section-head">
+    <span>Данные для iiko</span>
+    <button class="clear-btn" onclick="clearAll()">Очистить всё</button>
+  </div>
+  <div id="rowsContainer"></div>
+</div>
+
+<div class="bottom-bar">
+  <div class="total-summary">
+    <span class="total-summary-label">Общая сумма накладной:</span>
+    <span class="total-summary-amount" id="totalSummaryLabel">0 ₸</span>
+  </div>
+  <div class="btn-row">
+    <button class="btn-add" onclick="addRow()">+ Добавить товар</button>
+    <button class="btn-export" id="exportBtn" onclick="exportCSV()" disabled>📥 Скачать CSV</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let API_KEY = '';
+let rows = [], recognition = null, isRecording = false, transcript = '';
+const units = ['кг','г','л','мл','шт','уп','порц'];
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active',(tab==='voice'&&i===0)||(tab==='text'&&i===1)||(tab==='manual'&&i===2));
+  });
+  ['voice','text','manual'].forEach(p => {
+    document.getElementById('panel-'+p).classList.toggle('active', p===tab);
+  });
+}
+
+// ── ГОЛОС (без дублирования) ──
+function toggleVoice() { if (isRecording) stopRecording(); else startRecording(); }
+
+function startRecording() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showToast('⚠️ Используйте Chrome'); return; }
+  recognition = new SR();
+  recognition.lang = 'ru-RU';
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.onstart = () => {
+    isRecording = true;
+    document.getElementById('micBtn').classList.add('recording');
+    document.getElementById('micBtn').textContent = '⏹';
+    document.getElementById('micStatus').textContent = '● Слушаю...';
+    document.getElementById('micStatus').classList.add('active');
+    document.getElementById('transcriptWrap').style.display = 'block';
+  };
+  recognition.onresult = (e) => {
+    let finalResult = '', interimResult = '';
+    for (let i = 0; i < e.results.length; ++i) {
+      if (e.results[i].isFinal) finalResult += e.results[i][0].transcript;
+      else interimResult += e.results[i][0].transcript;
+    }
+    transcript = finalResult;
+    document.getElementById('transcriptBox').value = finalResult + interimResult;
+    if ((finalResult + interimResult).trim()) document.getElementById('processVoiceBtn').disabled = false;
+  };
+  recognition.onend = () => {
+    isRecording = false;
+    document.getElementById('micBtn').classList.remove('recording');
+    document.getElementById('micBtn').textContent = '🎤';
+    document.getElementById('micStatus').textContent = 'Запись остановлена. Можно продолжить.';
+    document.getElementById('micStatus').classList.remove('active');
+    const val = document.getElementById('transcriptBox').value.trim();
+    if (val) { transcript = val; document.getElementById('processVoiceBtn').disabled = false; }
+  };
+  recognition.start();
+}
+
+function stopRecording() { if (recognition) recognition.stop(); }
+
+function clearTranscript() {
+  transcript = '';
+  document.getElementById('transcriptBox').value = '';
+  document.getElementById('transcriptWrap').style.display = 'none';
+  document.getElementById('processVoiceBtn').disabled = true;
+  document.getElementById('micStatus').textContent = 'Нажмите для записи';
+  showToast('🗑 Запись очищена');
+}
+
+// ── GROQ AI ──
+async function askAI(text) {
+  const prompt = `Ты помощник ресторана iiko. Извлеки товары из текста.
+Текст: "${text}"
+Верни ТОЛЬКО чистый JSON без markdown:
+[{"name":"Название","qty":10,"unit":"кг","price":500}]
+Если цена не указана — 0. Если количество не указано — 1.`;
+
+  const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+API_KEY },
+    body: JSON.stringify({ model:'llama-3.3-70b-versatile', messages:[{role:'user',content:prompt}], temperature:0.1 })
+  });
+  const data = await resp.json();
+  if (data.error) throw new Error(data.error.message);
+  const raw = data.choices[0].message.content.trim().replace(/```json|```/g,'').trim();
+  return JSON.parse(raw);
+}
+
+async function processVoice() {
+  if (!transcript.trim()) return;
+  showLoading(true, 'ИИ разбирает голос...');
+  document.getElementById('processVoiceBtn').disabled = true;
+  try {
+    const items = await askAI(transcript);
+    addRowsFromAI(items);
+    transcript = '';
+    document.getElementById('transcriptBox').value = '';
+    document.getElementById('transcriptWrap').style.display = 'none';
+    document.getElementById('micStatus').textContent = 'Нажмите для записи';
+    showToast('✅ Добавлено: ' + items.length + ' позиций');
+  } catch(e) {
+    showToast('❌ Ошибка: ' + e.message);
+    document.getElementById('processVoiceBtn').disabled = false;
+  }
+  showLoading(false);
+}
+
+async function processRawText() {
+  const val = document.getElementById('rawInvoiceText').value.trim();
+  if (!val) { showToast('⚠️ Вставьте текст накладной'); return; }
+  showLoading(true, 'ИИ анализирует текст...');
+  try {
+    const items = await askAI(val);
+    addRowsFromAI(items);
+    document.getElementById('rawInvoiceText').value = '';
+    showToast('✅ Добавлено: ' + items.length + ' позиций');
+  } catch(e) {
+    showToast('❌ Ошибка: ' + e.message);
+  }
+  showLoading(false);
+}
+
+function addRowsFromAI(items) {
+  items.forEach(item => {
+    const q = parseFloat(item.qty)||1, p = parseFloat(item.price)||0;
+    rows.push({ id:Date.now()+Math.random(), name:item.name||'', qty:q, unit:item.unit||'кг', price:p, total:q*p });
+  });
+  renderTable();
+  document.getElementById('tableSection').style.display = 'block';
+  setTimeout(() => document.getElementById('tableSection').scrollIntoView({behavior:'smooth'}), 200);
+}
+
+function addRow() {
+  const id = Date.now()+Math.random();
+  rows.push({ id, name:'', qty:1, unit:'кг', price:0, total:0 });
+  renderTable();
+  document.getElementById('tableSection').style.display = 'block';
+  setTimeout(() => { const el=document.getElementById('name_'+id); if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();} }, 100);
+}
+
+function deleteRow(id) { rows=rows.filter(r=>r.id!==id); renderTable(); showToast('🗑 Удалено'); }
+function clearAll() { rows=[]; renderTable(); document.getElementById('tableSection').style.display='none'; showToast('🗑 Очищено'); }
+
+function recalcTotal(id) {
+  const row=rows.find(r=>r.id==id); if(!row) return;
+  const q=parseFloat(document.getElementById('qty_'+id)?.value)||0;
+  const p=parseFloat(document.getElementById('price_'+id)?.value)||0;
+  row.qty=q; row.price=p; row.total=q*p;
+  const bd=document.getElementById('total_badge_'+id);
+  const td=document.getElementById('total_disp_'+id);
+  if(bd) bd.textContent=row.total.toLocaleString('ru')+' ₸';
+  if(td) td.textContent=row.total.toLocaleString('ru')+' ₸';
+  updateTotal();
+}
+
+function updateTotal() {
+  const t=rows.reduce((s,r)=>s+(r.total||0),0);
+  document.getElementById('totalSummaryLabel').textContent=t.toLocaleString('ru')+' ₸';
+}
+
+function renderTable() {
+  const c=document.getElementById('rowsContainer'); c.innerHTML='';
+  rows.forEach((row,i) => {
+    const id=row.id;
+    const unitOpts=units.map(u=>`<option value="${u}" ${row.unit===u?'selected':''}>${u}</option>`).join('');
+    const card=document.createElement('div'); card.className='row-card';
+    card.innerHTML=`
+      <div class="row-top">
+        <span class="row-num">Товар ${i+1}</span>
+        <span class="row-total-badge" id="total_badge_${id}">${(row.total||0).toLocaleString('ru')} ₸</span>
+        <button class="del-btn" onclick="deleteRow(${id})">✕</button>
+      </div>
+      <div class="field-label">Наименование</div>
+      <input class="field-input" id="name_${id}" type="text" value="${row.name}" placeholder="Мука пшеничная..." oninput="rows.find(r=>r.id==${id}).name=this.value">
+      <div class="row-grid3">
+        <div>
+          <div class="field-label">Количество</div>
+          <div class="counter-wrap">
+            <button class="counter-btn" onclick="let r=rows.find(r=>r.id==${id});r.qty=Math.max(0,(parseFloat(r.qty)||0)-1);document.getElementById('qty_${id}').value=r.qty;recalcTotal(${id})">−</button>
+            <input class="counter-input" id="qty_${id}" type="number" value="${row.qty}" oninput="rows.find(r=>r.id==${id}).qty=parseFloat(this.value)||0;recalcTotal(${id})">
+            <button class="counter-btn" onclick="let r=rows.find(r=>r.id==${id});r.qty=(parseFloat(r.qty)||0)+1;document.getElementById('qty_${id}').value=r.qty;recalcTotal(${id})">+</button>
+          </div>
+        </div>
+        <div>
+          <div class="field-label">Единица</div>
+          <select class="unit-select" onchange="rows.find(r=>r.id==${id}).unit=this.value">${unitOpts}</select>
+        </div>
+        <div>
+          <div class="field-label">Цена ₸</div>
+          <input class="price-input" id="price_${id}" type="number" value="${row.price||0}" oninput="rows.find(r=>r.id==${id}).price=parseFloat(this.value)||0;recalcTotal(${id})">
+        </div>
+      </div>
+      <div style="margin-top:8px;text-align:right">
+        <div class="field-label">Сумма</div>
+        <div class="total-display" id="total_disp_${id}">${(row.total||0).toLocaleString('ru')} ₸</div>
+      </div>`;
+    c.appendChild(card);
+  });
+  updateTotal();
+  document.getElementById('exportBtn').disabled = rows.length===0;
+}
+
+function exportCSV() {
+  rows.forEach(r => {
+    const n=document.getElementById('name_'+r.id), q=document.getElementById('qty_'+r.id), p=document.getElementById('price_'+r.id);
+    if(n) r.name=n.value; if(q) r.qty=parseFloat(q.value)||0; if(p) r.price=parseFloat(p.value)||0;
+    r.total=r.qty*r.price;
+  });
+  const valid=rows.filter(r=>r.name.trim());
+  if(!valid.length){showToast('⚠️ Заполните хотя бы один товар');return;}
+  const header='Наименование,Количество,Единица,Цена,Сумма\n';
+  const body=valid.map(r=>`"${r.name.trim()}","${r.qty}","${r.unit}","${r.price}","${r.total}"`).join('\n');
+  const blob=new Blob(['\uFEFF'+header+body],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=`накладная_${new Date().toLocaleDateString('ru')}.csv`; a.click();
+  URL.revokeObjectURL(url);
+  showToast('📥 Скачано! Загрузите в iiko');
+}
+
+function showLoading(show,txt=''){document.getElementById('loading').style.display=show?'block':'none';if(txt)document.getElementById('loadingText').textContent=txt;}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+// ── ПАРОЛЬ ──
+const APP_PASSWORD='45620';
+function checkPassword(){
+  if(document.getElementById('lockInput').value===APP_PASSWORD){
+    const saved=sessionStorage.getItem('iiko_api_key');
+    if(saved){API_KEY=saved;unlockApp();}
+    else{document.getElementById('lockPassStep').style.display='none';document.getElementById('lockKeyStep').style.display='block';document.getElementById('keyInput').focus();}
+  } else {
+    const e=document.getElementById('lockInput'); e.classList.add('error'); document.getElementById('lockError').textContent='❌ Неверный пароль'; e.value=''; setTimeout(()=>e.classList.remove('error'),500);
+  }
+}
+function checkApiKey(){
+  const val=document.getElementById('keyInput').value.trim();
+  if(!val.startsWith('gsk_')){document.getElementById('keyError').textContent='❌ Ключ должен начинаться с gsk_';return;}
+  API_KEY=val; sessionStorage.setItem('iiko_api_key',val); unlockApp();
+}
+function unlockApp(){
+  sessionStorage.setItem('iiko_auth',Date.now());
+  document.getElementById('lockScreen').classList.add('hidden');
+  document.getElementById('mainApp').style.display='block';
+}
+window.addEventListener('load',()=>{
+  const auth=sessionStorage.getItem('iiko_auth'), saved=sessionStorage.getItem('iiko_api_key');
+  if(auth&&saved&&(Date.now()-parseInt(auth))<8*60*60*1000){API_KEY=saved;document.getElementById('lockScreen').classList.add('hidden');document.getElementById('mainApp').style.display='block';}
+});
+</script>
+</div>
+</body>
+</html>
