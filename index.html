@@ -18,21 +18,6 @@
   body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
   /* LOCK */
-  .lock-screen{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#00b894,#00cec9);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
-  .lock-screen.hidden{display:none;}
-  .lock-logo{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:6px;}
-  .lock-title{font-family:'Unbounded',sans-serif;font-size:20px;color:#fff;font-weight:700;text-align:center;}
-  .lock-icon{font-size:56px;margin:16px 0;}
-  .lock-box{background:#fff;border-radius:20px;padding:24px;width:100%;max-width:360px;box-shadow:0 16px 48px rgba(0,0,0,0.15);}
-  .lock-box-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;text-align:center;letter-spacing:1px;text-transform:uppercase;}
-  .lock-input{width:100%;border:2px solid var(--border);border-radius:12px;padding:13px 16px;font-family:'Manrope',sans-serif;font-size:16px;font-weight:600;color:var(--text);outline:none;background:var(--bg);text-align:center;margin-bottom:12px;}
-  .lock-input:focus{border-color:var(--accent);}
-  .lock-input.error{border-color:var(--danger);animation:shake 0.4s ease;}
-  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
-  .lock-btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#00cec9);color:#fff;font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;cursor:pointer;}
-  .lock-btn:active{transform:scale(0.98);}
-  .lock-error{font-size:12px;color:var(--danger);font-weight:700;text-align:center;margin-top:8px;min-height:16px;}
-  .lock-hint{font-size:11px;color:var(--text2);text-align:center;margin-top:10px;line-height:1.5;}
 
   /* HEADER */
   .header{background:var(--accent);padding:14px 16px;text-align:center;box-shadow:0 2px 16px rgba(0,184,148,0.3);}
@@ -141,28 +126,8 @@
 </head>
 <body>
 
-<!-- LOCK -->
-<div class="lock-screen" id="lockScreen">
-  <div class="lock-logo">iiko</div>
-  <div class="lock-title">Помощник оператора</div>
-  <div class="lock-icon">🔐</div>
-  <div class="lock-box" id="lockPassStep">
-    <div class="lock-box-title">Пароль</div>
-    <input class="lock-input" id="lockInput" type="password" placeholder="••••••" maxlength="20" onkeydown="if(event.key==='Enter')checkPassword()">
-    <button class="lock-btn" onclick="checkPassword()">Далее →</button>
-    <div class="lock-error" id="lockError"></div>
-  </div>
-  <div class="lock-box" id="lockKeyStep" style="display:none">
-    <div class="lock-box-title">🔑 Gemini API ключ</div>
-    <input class="lock-input" id="keyInput" type="password" placeholder="AQ.Ab8RN..." style="font-size:12px;letter-spacing:0.5px" onkeydown="if(event.key==='Enter')checkApiKey()">
-    <button class="lock-btn" onclick="checkApiKey()">Войти →</button>
-    <div class="lock-error" id="keyError"></div>
-    <div class="lock-hint">Ключ от aistudio.google.com</div>
-  </div>
-</div>
-
 <!-- MAIN APP -->
-<div id="mainApp" style="display:none">
+<div id="mainApp">
 <div class="header">
   <div class="header-logo">iiko</div>
   <h1>Помощник оператора</h1>
@@ -295,7 +260,6 @@
 
 <script>
 const WORKER_URL = 'https://small-shadow-b1ff.1kemenger.workers.dev';
-let GEMINI_KEY_APP = '';
 let recognition = null, isRecording = false, voiceText = '';
 const units = ['кг','г','л','мл','шт','уп','порц'];
 
@@ -369,7 +333,7 @@ async function processVoiceData() {
   document.getElementById('voiceBtn').disabled = true;
   showLoading(true, 'ИИ разбирает голос...');
   try {
-    const items = await askQwen(voiceText);
+    const items = await askGemini(voiceText);
     addToTable('voice', items);
     voiceText = '';
     document.getElementById('transcriptBox').value = '';
@@ -465,7 +429,7 @@ async function processTextData() {
   if (!val) { showToast('⚠️ Вставьте текст'); return; }
   showLoading(true, 'ИИ анализирует текст...');
   try {
-    const items = await askQwen(val);
+    const items = await askGemini(val);
     addToTable('text', items);
     document.getElementById('rawText').value = '';
     showToast(`✅ Добавлено ${items.length} позиций!`);
@@ -476,7 +440,7 @@ async function processTextData() {
 }
 
 // ── GEMINI API через Worker ──
-async function askQwen(text) {
+async function askGemini(text) {
   const prompt = `Ты помощник ресторана iiko. Извлеки товары из текста.
 Текст: "${text}"
 Верни ТОЛЬКО чистый JSON без markdown:
@@ -745,51 +709,7 @@ function loadScript(src) {
 function showLoading(show,txt=''){document.getElementById('loading').style.display=show?'block':'none';if(txt)document.getElementById('loadingText').textContent=txt;}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 
-// ── АВТОРИЗАЦИЯ ──
-const APP_PASSWORD='45620';
-
-function checkPassword(){
-  const val=document.getElementById('lockInput').value;
-  const el=document.getElementById('lockInput');
-  if(val!==APP_PASSWORD){
-    el.classList.add('error');
-    document.getElementById('lockError').textContent='❌ Неверный пароль';
-    el.value='';
-    setTimeout(()=>el.classList.remove('error'),500);
-    return;
-  }
-  const saved=sessionStorage.getItem('iiko_gemini');
-  if(saved){GEMINI_KEY_APP=saved;unlockApp();}
-  else{
-    document.getElementById('lockPassStep').style.display='none';
-    document.getElementById('lockKeyStep').style.display='block';
-    document.getElementById('keyInput').focus();
-  }
-}
-
-function checkApiKey(){
-  const val=document.getElementById('keyInput').value.trim();
-  if(!val||val.length<10){document.getElementById('keyError').textContent='❌ Введите правильный ключ';return;}
-  GEMINI_KEY_APP=val;
-  sessionStorage.setItem('iiko_gemini',val);
-  unlockApp();
-}
-
-function unlockApp(){
-  sessionStorage.setItem('iiko_auth',Date.now());
-  document.getElementById('lockScreen').classList.add('hidden');
-  document.getElementById('mainApp').style.display='block';
-}
-
 window.addEventListener('load',()=>{
-  const auth=sessionStorage.getItem('iiko_auth');
-  const saved=sessionStorage.getItem('iiko_gemini');
-  if(auth&&saved&&(Date.now()-parseInt(auth))<8*60*60*1000){
-    GEMINI_KEY_APP=saved;
-    document.getElementById('lockScreen').classList.add('hidden');
-    document.getElementById('mainApp').style.display='block';
-  }
-
   // Регистрируем Service Worker для PWA
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(()=>{});
